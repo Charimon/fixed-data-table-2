@@ -11,7 +11,6 @@
 
 .fixedDataTableRowLayout/main {
   box-sizing: border-box;
-  overflow: hidden;
   position: absolute;
   top: 0;
 }

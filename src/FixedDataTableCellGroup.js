@@ -155,6 +155,11 @@ var FixedDataTableCellGroupImpl = createReactClass({
         cell={columnProps.cell}
         columnGroupWidth={columnGroupWidth}
         pureRendering={pureRendering}
+        onCellClick={this.props.onCellClick}
+        onCellDoubleClick={this.props.onCellDoubleClick}
+        activeRowIndex={this.props.activeRowIndex}
+        activeColumnKey={this.props.activeColumnKey}
+        isActiveEditing={this.props.isActiveEditing}
       />
     );
   },

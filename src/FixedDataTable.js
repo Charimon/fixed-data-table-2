@@ -538,6 +538,11 @@ var FixedDataTable = createReactClass({
           onColumnResize={this._onColumnResize}
           onColumnReorder={onColumnReorder}
           onColumnReorderMove={this._onColumnReorderMove}
+          onCellClick={this._onCellClick}
+          onCellDoubleClick={this._onCellDoubleClick}
+          activeRowIndex={state.activeRowIndex}
+          activeColumnKey={state.activeColumnKey}
+          isActiveEditing={state.isActiveEditing}
         />
       );
     }
@@ -626,6 +631,11 @@ var FixedDataTable = createReactClass({
           fixedColumns={state.footFixedColumns}
           scrollableColumns={state.footScrollableColumns}
           scrollLeft={state.scrollX}
+          onCellClick={this._onCellClick}
+          onCellDoubleClick={this._onCellDoubleClick}
+          activeRowIndex={state.activeRowIndex}
+          activeColumnKey={state.activeColumnKey}
+          isActiveEditing={state.isActiveEditing}
         />;
     }
 
@@ -653,6 +663,11 @@ var FixedDataTable = createReactClass({
         onColumnReorderEnd={this._onColumnReorderEnd}
         isColumnReordering={!!state.isColumnReordering}
         columnReorderingData={state.columnReorderingData}
+        onCellClick={this._onCellClick}
+        onCellDoubleClick={this._onCellDoubleClick}
+        activeRowIndex={state.activeRowIndex}
+        activeColumnKey={state.activeColumnKey}
+        isActiveEditing={state.isActiveEditing}
       />;
 
     var topShadow;
@@ -746,8 +761,29 @@ var FixedDataTable = createReactClass({
         width={state.width}
         rowPositionGetter={this._scrollHelper.getRowPosition}
         bufferRowCount={this.state.bufferRowCount}
+        onCellClick={this._onCellClick}
+        onCellDoubleClick={this._onCellDoubleClick}
+        activeRowIndex={state.activeRowIndex}
+        activeColumnKey={state.activeColumnKey}
+        isActiveEditing={state.isActiveEditing}
       />
     );
+  },
+
+  _onCellClick(rowIndex, columnKey, e) {
+    this.setState(state => Object.assign({}, state, {
+      activeRowIndex: rowIndex,
+      activeColumnKey: columnKey,
+      isActiveEditing: false,
+    }))
+  },
+
+  _onCellDoubleClick(rowIndex, columnKey, e) {
+    this.setState(state => Object.assign({}, state, {
+      activeRowIndex: rowIndex,
+      activeColumnKey: columnKey,
+      isActiveEditing: true,
+    }))
   },
 
   /**

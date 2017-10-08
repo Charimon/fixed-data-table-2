@@ -42,7 +42,6 @@
 }
 
 .fixedDataTableLayout/rowsContainer {
-  overflow: hidden;
   position: relative;
 }
 

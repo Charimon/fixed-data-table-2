@@ -85,6 +85,9 @@ var FixedDataTableCell = createReactClass({
      * Flag for enhanced performance check
      */
     pureRendering: PropTypes.bool,
+
+    onCellClick: PropTypes.func,
+    onCellDoubleClick: PropTypes.func,
   },
 
   getInitialState() {
@@ -200,6 +203,14 @@ var FixedDataTableCell = createReactClass({
     return DEFAULT_PROPS;
   },
 
+  _onCellClick(rowIndex, columnKey, e) {
+    this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e)
+  },
+
+  _onCellDoubleClick(rowIndex, columnKey, e) {
+    this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e)
+  },
+
   render() /*object*/ {
 
     var {height, width, columnKey, ...props} = this.props;
@@ -219,6 +230,8 @@ var FixedDataTableCell = createReactClass({
       style.transform = `translateX(${this.state.displacement}px) translateZ(0)`;
       style.zIndex = 1;
     }
+
+    const isActiveCell = props.activeRowIndex == props.rowIndex && props.activeColumnKey == columnKey
 
     var className = joinClasses(
       cx({
@@ -271,7 +284,10 @@ var FixedDataTableCell = createReactClass({
     var cellProps = {
       columnKey,
       height,
-      width
+      width,
+      onClick: e => this._onCellClick(props.rowIndex, columnKey, e),
+      onDoubleClick: e => this._onCellDoubleClick(props.rowIndex, columnKey, e),
+      isActiveCell,
     };
 
     if (props.rowIndex >= 0) {

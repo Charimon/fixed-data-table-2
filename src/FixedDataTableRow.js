@@ -134,6 +134,8 @@ class FixedDataTableRowImpl extends React.Component {
       'public/fixedDataTableRow/odd': (this.props.index % 2 === 1),
       'public/fixedDataTableRow/even': (this.props.index % 2 === 0),
     });
+
+    const isActiveRow = this.props.activeRowIndex == this.props.index
     var fixedColumnsWidth = this._getColumnsWidth(this.props.fixedColumns);
     var fixedColumns =
       <FixedDataTableCellGroup
@@ -142,7 +144,7 @@ class FixedDataTableRowImpl extends React.Component {
         height={this.props.height}
         left={0}
         width={fixedColumnsWidth}
-        zIndex={2}
+        zIndex={isActiveRow?3:2}
         columns={this.props.fixedColumns}
         onColumnResize={this.props.onColumnResize}
         onColumnReorder={this.props.onColumnReorder}
@@ -152,6 +154,11 @@ class FixedDataTableRowImpl extends React.Component {
         columnReorderingData={this.props.columnReorderingData}
         rowHeight={this.props.height}
         rowIndex={this.props.index}
+        onCellClick={this.props.onCellClick}
+        onCellDoubleClick={this.props.onCellDoubleClick}
+        activeRowIndex={this.props.activeRowIndex}
+        activeColumnKey={this.props.activeColumnKey}
+        isActiveEditing={this.props.isActiveEditing}
       />;
     var columnsLeftShadow = this._renderColumnsLeftShadow(fixedColumnsWidth);
     var scrollableColumns =
@@ -162,7 +169,7 @@ class FixedDataTableRowImpl extends React.Component {
         left={this.props.scrollLeft}
         offsetLeft={fixedColumnsWidth}
         width={this.props.width - fixedColumnsWidth}
-        zIndex={0}
+        zIndex={isActiveRow?1:0}
         columns={this.props.scrollableColumns}
         onColumnResize={this.props.onColumnResize}
         onColumnReorder={this.props.onColumnReorder}
@@ -172,6 +179,11 @@ class FixedDataTableRowImpl extends React.Component {
         columnReorderingData={this.props.columnReorderingData}
         rowHeight={this.props.height}
         rowIndex={this.props.index}
+        onCellClick={this.props.onCellClick}
+        onCellDoubleClick={this.props.onCellDoubleClick}
+        activeRowIndex={this.props.activeRowIndex}
+        activeColumnKey={this.props.activeColumnKey}
+        isActiveEditing={this.props.isActiveEditing}
       />;
     var scrollableColumnsWidth = this._getColumnsWidth(this.props.scrollableColumns);
     var columnsRightShadow = this._renderColumnsRightShadow(fixedColumnsWidth + scrollableColumnsWidth);
@@ -205,7 +217,7 @@ class FixedDataTableRowImpl extends React.Component {
         {columnsRightShadow}
       </div>
     );
-  }
+  };
 
   _getColumnsWidth = (/*array*/ columns) => /*number*/ {
     var width = 0;
@@ -243,7 +255,8 @@ class FixedDataTableRowImpl extends React.Component {
      });
      var style = {
        left: left,
-       height: this.props.height
+       height: this.props.height,
+       zIndex: 2,
      };
      return <div className={className} style={style} />;
    };
@@ -324,10 +337,13 @@ class FixedDataTableRow extends React.Component {
   }
 
   render() /*object*/ {
+    const isActiveRow = this.props.activeRowIndex == this.props.index
+    const zIndex = isActiveRow?1:0
+    
     var style = {
       width: this.props.width,
       height: this.props.height,
-      zIndex: (this.props.zIndex ? this.props.zIndex : 0),
+      zIndex: (this.props.zIndex ? this.props.zIndex : zIndex),
     };
     FixedDataTableTranslateDOMPosition(style, 0, this.props.offsetTop, this._initialRender);
 
@@ -339,6 +355,11 @@ class FixedDataTableRow extends React.Component {
           {...this.props}
           offsetTop={undefined}
           zIndex={undefined}
+          onCellClick={this.props.onCellClick}
+          onCellDoubleClick={this.props.onCellDoubleClick}
+          activeRowIndex={this.props.activeRowIndex}
+          activeColumnKey={this.props.activeColumnKey}
+          isActiveEditing={this.props.isActiveEditing}
         />
       </div>
     );

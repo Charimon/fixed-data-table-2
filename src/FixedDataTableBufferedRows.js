@@ -174,6 +174,11 @@ var FixedDataTableBufferedRows = createReactClass({
           onMouseUp={props.onRowMouseUp}
           onMouseEnter={props.onRowMouseEnter}
           onMouseLeave={props.onRowMouseLeave}
+          onCellClick={props.onCellClick}
+          onCellDoubleClick={props.onCellDoubleClick}
+          activeRowIndex={props.activeRowIndex}
+          activeColumnKey={props.activeColumnKey}
+          isActiveEditing={props.isActiveEditing}
           className={joinClasses(
             rowClassNameGetter(rowIndex),
             cx('public/fixedDataTable/bodyRow'),

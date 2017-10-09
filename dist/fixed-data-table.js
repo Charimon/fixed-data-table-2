@@ -81,7 +81,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 43);
+/******/ 	return __webpack_require__(__webpack_require__.s = 44);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -109,12 +109,10 @@ module.exports = __webpack_require__(31);
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 if (process.env.NODE_ENV !== 'production') {
@@ -209,19 +207,17 @@ module.exports = cx;
 
 "use strict";
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
 
 
 var React = __webpack_require__(31);
-var factory = __webpack_require__(46);
+var factory = __webpack_require__(47);
 
 if (typeof React === 'undefined') {
   throw Error(
@@ -609,11 +605,9 @@ module.exports = joinClasses;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -894,12 +888,10 @@ module.exports = clamp;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2014-2015, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -968,11 +960,9 @@ module.exports = warning;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -1009,12 +999,10 @@ module.exports = emptyFunction;
 
 "use strict";
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 
@@ -1310,6 +1298,103 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_31__;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Copyright Schrodinger, LLC
  * All rights reserved.
@@ -1426,7 +1511,7 @@ var ReactWheelHandler = function () {
 module.exports = ReactWheelHandler;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1470,13 +1555,13 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _ExecutionEnvironment = __webpack_require__(33);
+var _ExecutionEnvironment = __webpack_require__(34);
 
 var _ExecutionEnvironment2 = _interopRequireDefault(_ExecutionEnvironment);
 
@@ -1536,7 +1621,7 @@ function getVendorPrefixedName(property) {
 module.exports = getVendorPrefixedName;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1641,7 +1726,8 @@ var FixedDataTableRowImpl = function (_React$Component) {
       });
       var style = {
         left: left,
-        height: _this.props.height
+        height: _this.props.height,
+        zIndex: 2
       };
       return _React2.default.createElement('div', { className: className, style: style });
     }, _this._renderColumnsRightShadow = function ( /*number*/totalWidth) /*?object*/{
@@ -1656,6 +1742,8 @@ var FixedDataTableRowImpl = function (_React$Component) {
       _this.props.onClick(event, _this.props.index);
     }, _this._onDoubleClick = function ( /*object*/event) {
       _this.props.onDoubleClick(event, _this.props.index);
+    }, _this._onMouseUp = function ( /*object*/event) {
+      _this.props.onMouseUp(event, _this.props.index);
     }, _this._onMouseDown = function ( /*object*/event) {
       _this.props.onMouseDown(event, _this.props.index);
     }, _this._onMouseEnter = function ( /*object*/event) {
@@ -1680,6 +1768,8 @@ var FixedDataTableRowImpl = function (_React$Component) {
         'public/fixedDataTableRow/odd': this.props.index % 2 === 1,
         'public/fixedDataTableRow/even': this.props.index % 2 === 0
       });
+
+      var isActiveRow = this.props.activeRowIndex == this.props.index;
       var fixedColumnsWidth = this._getColumnsWidth(this.props.fixedColumns);
       var fixedColumns = _React2.default.createElement(_FixedDataTableCellGroup2.default, {
         key: 'fixed_cells',
@@ -1687,7 +1777,7 @@ var FixedDataTableRowImpl = function (_React$Component) {
         height: this.props.height,
         left: 0,
         width: fixedColumnsWidth,
-        zIndex: 2,
+        zIndex: isActiveRow ? 3 : 2,
         columns: this.props.fixedColumns,
         onColumnResize: this.props.onColumnResize,
         onColumnReorder: this.props.onColumnReorder,
@@ -1696,7 +1786,13 @@ var FixedDataTableRowImpl = function (_React$Component) {
         isColumnReordering: this.props.isColumnReordering,
         columnReorderingData: this.props.columnReorderingData,
         rowHeight: this.props.height,
-        rowIndex: this.props.index
+        rowIndex: this.props.index,
+        onCellClick: this.props.onCellClick,
+        onCellDoubleClick: this.props.onCellDoubleClick,
+        activeRowIndex: this.props.activeRowIndex,
+        activeColumnKey: this.props.activeColumnKey,
+        editingRowIndex: this.props.editingRowIndex,
+        editingColumnKey: this.props.editingColumnKey
       });
       var columnsLeftShadow = this._renderColumnsLeftShadow(fixedColumnsWidth);
       var scrollableColumns = _React2.default.createElement(_FixedDataTableCellGroup2.default, {
@@ -1706,7 +1802,7 @@ var FixedDataTableRowImpl = function (_React$Component) {
         left: this.props.scrollLeft,
         offsetLeft: fixedColumnsWidth,
         width: this.props.width - fixedColumnsWidth,
-        zIndex: 0,
+        zIndex: isActiveRow ? 1 : 0,
         columns: this.props.scrollableColumns,
         onColumnResize: this.props.onColumnResize,
         onColumnReorder: this.props.onColumnReorder,
@@ -1715,7 +1811,13 @@ var FixedDataTableRowImpl = function (_React$Component) {
         isColumnReordering: this.props.isColumnReordering,
         columnReorderingData: this.props.columnReorderingData,
         rowHeight: this.props.height,
-        rowIndex: this.props.index
+        rowIndex: this.props.index,
+        onCellClick: this.props.onCellClick,
+        onCellDoubleClick: this.props.onCellDoubleClick,
+        activeRowIndex: this.props.activeRowIndex,
+        activeColumnKey: this.props.activeColumnKey,
+        editingRowIndex: this.props.editingRowIndex,
+        editingColumnKey: this.props.editingColumnKey
       });
       var scrollableColumnsWidth = this._getColumnsWidth(this.props.scrollableColumns);
       var columnsRightShadow = this._renderColumnsRightShadow(fixedColumnsWidth + scrollableColumnsWidth);
@@ -1733,6 +1835,7 @@ var FixedDataTableRowImpl = function (_React$Component) {
           onClick: this.props.onClick ? this._onClick : null,
           onDoubleClick: this.props.onDoubleClick ? this._onDoubleClick : null,
           onMouseDown: this.props.onMouseDown ? this._onMouseDown : null,
+          onMouseUp: this.props.onMouseUp ? this._onMouseUp : null,
           onMouseEnter: this.props.onMouseEnter ? this._onMouseEnter : null,
           onMouseLeave: this.props.onMouseLeave ? this._onMouseLeave : null,
           style: style },
@@ -1872,10 +1975,13 @@ var FixedDataTableRow = function (_React$Component2) {
   }, {
     key: 'render',
     value: function render() /*object*/{
+      var isActiveRow = this.props.activeRowIndex == this.props.index;
+      var zIndex = isActiveRow ? 1 : 0;
+
       var style = {
         width: this.props.width,
         height: this.props.height,
-        zIndex: this.props.zIndex ? this.props.zIndex : 0
+        zIndex: this.props.zIndex ? this.props.zIndex : zIndex
       };
       (0, _FixedDataTableTranslateDOMPosition2.default)(style, 0, this.props.offsetTop, this._initialRender);
 
@@ -1886,7 +1992,13 @@ var FixedDataTableRow = function (_React$Component2) {
           className: (0, _cx2.default)('fixedDataTableRowLayout/rowWrapper') },
         _React2.default.createElement(FixedDataTableRowImpl, _extends({}, this.props, {
           offsetTop: undefined,
-          zIndex: undefined
+          zIndex: undefined,
+          onCellClick: this.props.onCellClick,
+          onCellDoubleClick: this.props.onCellDoubleClick,
+          activeRowIndex: this.props.activeRowIndex,
+          activeColumnKey: this.props.activeColumnKey,
+          editingRowIndex: this.props.editingRowIndex,
+          editingColumnKey: this.props.editingColumnKey
         }))
       );
     }
@@ -1925,7 +2037,7 @@ FixedDataTableRow.propTypes = {
 module.exports = FixedDataTableRow;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1951,11 +2063,11 @@ var _React = __webpack_require__(0);
 
 var _React2 = _interopRequireDefault(_React);
 
-var _FixedDataTableColumnGroup = __webpack_require__(37);
+var _FixedDataTableColumnGroup = __webpack_require__(38);
 
 var _FixedDataTableColumnGroup2 = _interopRequireDefault(_FixedDataTableColumnGroup);
 
-var _FixedDataTableColumn = __webpack_require__(38);
+var _FixedDataTableColumn = __webpack_require__(39);
 
 var _FixedDataTableColumn2 = _interopRequireDefault(_FixedDataTableColumn);
 
@@ -2048,7 +2160,7 @@ var FixedDataTableHelper = {
 module.exports = FixedDataTableHelper;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2149,7 +2261,7 @@ FixedDataTableColumnGroup.defaultProps = {
 module.exports = FixedDataTableColumnGroup;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2363,7 +2475,7 @@ FixedDataTableColumn.defaultProps = {
 module.exports = FixedDataTableColumn;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2453,7 +2565,9 @@ var FixedDataTableCellDefault = function (_React$Component) {
           children = _props.children,
           columnKey = _props.columnKey,
           rowIndex = _props.rowIndex,
-          props = _objectWithoutProperties(_props, ['height', 'width', 'style', 'className', 'children', 'columnKey', 'rowIndex']);
+          isActiveCell = _props.isActiveCell,
+          isEditingCell = _props.isEditingCell,
+          props = _objectWithoutProperties(_props, ['height', 'width', 'style', 'className', 'children', 'columnKey', 'rowIndex', 'isActiveCell', 'isEditingCell']);
 
       var innerStyle = _extends({
         height: height,
@@ -2520,7 +2634,7 @@ FixedDataTableCellDefault.propTypes = {
 module.exports = FixedDataTableCellDefault;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2577,9 +2691,9 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 41 */,
 /* 42 */,
-/* 43 */
+/* 43 */,
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(13);
@@ -2594,11 +2708,11 @@ __webpack_require__(21);
 __webpack_require__(22);
 __webpack_require__(23);
 __webpack_require__(24);
-module.exports = __webpack_require__(44);
+module.exports = __webpack_require__(45);
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2615,19 +2729,19 @@ module.exports = __webpack_require__(44);
 
 
 
-var _FixedDataTable = __webpack_require__(45);
+var _FixedDataTable = __webpack_require__(46);
 
 var _FixedDataTable2 = _interopRequireDefault(_FixedDataTable);
 
-var _FixedDataTableCellDefault = __webpack_require__(39);
+var _FixedDataTableCellDefault = __webpack_require__(40);
 
 var _FixedDataTableCellDefault2 = _interopRequireDefault(_FixedDataTableCellDefault);
 
-var _FixedDataTableColumn = __webpack_require__(38);
+var _FixedDataTableColumn = __webpack_require__(39);
 
 var _FixedDataTableColumn2 = _interopRequireDefault(_FixedDataTableColumn);
 
-var _FixedDataTableColumnGroup = __webpack_require__(37);
+var _FixedDataTableColumnGroup = __webpack_require__(38);
 
 var _FixedDataTableColumnGroup2 = _interopRequireDefault(_FixedDataTableColumnGroup);
 
@@ -2644,7 +2758,7 @@ FixedDataTableRoot.version = '0.8.1';
 module.exports = FixedDataTableRoot;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2681,7 +2795,7 @@ var _ReactComponentWithPureRenderMixin = __webpack_require__(10);
 
 var _ReactComponentWithPureRenderMixin2 = _interopRequireDefault(_ReactComponentWithPureRenderMixin);
 
-var _ReactWheelHandler = __webpack_require__(32);
+var _ReactWheelHandler = __webpack_require__(33);
 
 var _ReactWheelHandler2 = _interopRequireDefault(_ReactWheelHandler);
 
@@ -2701,7 +2815,7 @@ var _FixedDataTableColumnResizeHandle = __webpack_require__(74);
 
 var _FixedDataTableColumnResizeHandle2 = _interopRequireDefault(_FixedDataTableColumnResizeHandle);
 
-var _FixedDataTableRow = __webpack_require__(35);
+var _FixedDataTableRow = __webpack_require__(36);
 
 var _FixedDataTableRow2 = _interopRequireDefault(_FixedDataTableRow);
 
@@ -2733,7 +2847,7 @@ var _joinClasses = __webpack_require__(8);
 
 var _joinClasses2 = _interopRequireDefault(_joinClasses);
 
-var _shallowEqual = __webpack_require__(40);
+var _shallowEqual = __webpack_require__(41);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -3013,6 +3127,11 @@ var FixedDataTable = (0, _createReactClass2.default)({
     onRowMouseDown: _propTypes2.default.func,
 
     /**
+     * Callback that is called when a mouse-up event happens on a row.
+     */
+    onRowMouseUp: _propTypes2.default.func,
+
+    /**
      * Callback that is called when a mouse-enter event happens on a row.
      */
     onRowMouseEnter: _propTypes2.default.func,
@@ -3067,7 +3186,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
      * The number of rows outside the viewport to prerender. Defaults to roughly
      * half of the number of visible rows.
      */
-    bufferRowCount: _propTypes2.default.number
+    bufferRowCount: _propTypes2.default.number,
+
+    onSelectCells: _propTypes2.default.func
   },
 
   getDefaultProps: function getDefaultProps() /*object*/{
@@ -3193,7 +3314,13 @@ var FixedDataTable = (0, _createReactClass2.default)({
         scrollableColumns: state.groupHeaderScrollableColumns,
         onColumnResize: this._onColumnResize,
         onColumnReorder: onColumnReorder,
-        onColumnReorderMove: this._onColumnReorderMove
+        onColumnReorderMove: this._onColumnReorderMove,
+        onCellClick: this._onCellClick,
+        onCellDoubleClick: this._onCellDoubleClick,
+        activeRowIndex: state.activeRowIndex,
+        activeColumnKey: state.activeColumnKey,
+        editingRowIndex: state.editingRowIndex,
+        editingColumnKey: state.editingColumnKey
       });
     }
 
@@ -3267,7 +3394,13 @@ var FixedDataTable = (0, _createReactClass2.default)({
         offsetTop: footOffsetTop,
         fixedColumns: state.footFixedColumns,
         scrollableColumns: state.footScrollableColumns,
-        scrollLeft: state.scrollX
+        scrollLeft: state.scrollX,
+        onCellClick: this._onCellClick,
+        onCellDoubleClick: this._onCellDoubleClick,
+        activeRowIndex: state.activeRowIndex,
+        activeColumnKey: state.activeColumnKey,
+        editingRowIndex: state.editingRowIndex,
+        editingColumnKey: state.editingColumnKey
       });
     }
 
@@ -3290,7 +3423,13 @@ var FixedDataTable = (0, _createReactClass2.default)({
       onColumnReorderMove: this._onColumnReorderMove,
       onColumnReorderEnd: this._onColumnReorderEnd,
       isColumnReordering: !!state.isColumnReordering,
-      columnReorderingData: state.columnReorderingData
+      columnReorderingData: state.columnReorderingData,
+      onCellClick: this._onCellClick,
+      onCellDoubleClick: this._onCellDoubleClick,
+      activeRowIndex: state.activeRowIndex,
+      activeColumnKey: state.activeColumnKey,
+      editingRowIndex: state.editingRowIndex,
+      editingColumnKey: state.editingColumnKey
     });
 
     var topShadow;
@@ -3350,6 +3489,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       onRowClick: state.onRowClick,
       onRowDoubleClick: state.onRowDoubleClick,
       onRowMouseDown: state.onRowMouseDown,
+      onRowMouseUp: state.onRowMouseUp,
       onRowMouseEnter: state.onRowMouseEnter,
       onRowMouseLeave: state.onRowMouseLeave,
       rowClassNameGetter: state.rowClassNameGetter,
@@ -3365,8 +3505,120 @@ var FixedDataTable = (0, _createReactClass2.default)({
       showLastRowBorder: true,
       width: state.width,
       rowPositionGetter: this._scrollHelper.getRowPosition,
-      bufferRowCount: this.state.bufferRowCount
+      bufferRowCount: this.state.bufferRowCount,
+      onCellClick: this._onCellClick,
+      onCellDoubleClick: this._onCellDoubleClick,
+      activeRowIndex: state.activeRowIndex,
+      activeColumnKey: state.activeColumnKey,
+      editingRowIndex: state.editingRowIndex,
+      editingColumnKey: state.editingColumnKey
     });
+  },
+  _handleDocClick: function _handleDocClick() {
+    this._unbindEvents();
+    this.setState(function (state) {
+      return _extends({}, state, {
+        activeRowIndex: null,
+        activeColumnKey: null,
+        editingRowIndex: null,
+        editingColumnKey: null
+      });
+    });
+  },
+  _handleDocKeydown: function _handleDocKeydown(e) {
+    var _this = this;
+
+    var isEditing = this.state.editingRowIndex != null || this.state.editingColumnKey != null;
+
+    var columnIndex = this.state.columns.findIndex(function (col) {
+      return col.props.columnKey == _this.state.activeColumnKey;
+    });
+    if (e.key == "ArrowRight" && !isEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex, columnIndex + 1, false, e.shiftKey, false, true);
+    } else if (e.key == "ArrowLeft" && !isEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex, columnIndex - 1, false, e.shiftKey, false, true);
+    } else if (e.key == "ArrowUp" && !isEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex - 1, columnIndex, false, e.shiftKey, false, true);
+    } else if (e.key == "ArrowDown" && !isEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex + 1, columnIndex, false, e.shiftKey, false, true);
+    } else if (e.key == "Enter") {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex, columnIndex, true);
+    } else if (e.key == "Escape" && !isEditing) {
+      e.preventDefault();
+      this.selectCell();
+    } else if (e.key == "Escape" && isEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex, columnIndex, false);
+    }
+  },
+  _bindEvents: function _bindEvents() {
+    this._unbindEvents();
+    document.addEventListener("click", this._handleDocClick);
+    document.addEventListener("keydown", this._handleDocKeydown);
+    // document.onselectstart = () => false;
+  },
+  _unbindEvents: function _unbindEvents() {
+    document.removeEventListener("click", this._handleDocClick);
+    document.removeEventListener("keydown", this._handleDocKeydown);
+    // document.onselectstart = null;
+  },
+  _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    this.setState(function (state) {
+      return _extends({}, state, {
+        activeRowIndex: rowIndex,
+        activeColumnKey: columnKey,
+        editingRowIndex: null,
+        editingColumnKey: null
+      });
+    });
+    this._bindEvents();
+  },
+  _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
+    this.setState(function (state) {
+      return _extends({}, state, {
+        activeRowIndex: rowIndex,
+        activeColumnKey: columnKey,
+        editingRowIndex: rowIndex,
+        editingColumnKey: columnKey
+      });
+    });
+  },
+  selectCell: function selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
+    if (rowIndex == null || columnIndex == null) {
+      this.setState(function (state) {
+        return _extends({}, state, {
+          activeRowIndex: null,
+          activeColumnKey: null,
+          editingRowIndex: null,
+          editingColumnKey: null
+        });
+      });
+      this._unbindEvents();
+      return;
+    }
+
+    var columnCount = this.state.columns.length;
+    var rowCount = this.props.rowsCount;
+    var potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), rowCount - 1);
+    var potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), columnCount - 1);
+
+    var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;
+
+    this.setState(this._calculateState(_extends({}, this.props, {
+      scrollToRow: potentialActiveRowIndex,
+      scrollToColumn: potentialActiveColumnIndex,
+      activeRowIndex: potentialActiveRowIndex,
+      activeColumnKey: columnKey,
+      editingRowIndex: editing ? potentialActiveRowIndex : null,
+      editingColumnKey: editing ? columnKey : null
+    }), this.state));
+
+    this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, activeColumnKey, editing);
   },
 
 
@@ -3927,23 +4179,21 @@ var HorizontalScrollbar = (0, _createReactClass2.default)({
 module.exports = FixedDataTable;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
 
 
-var _assign = __webpack_require__(47);
+var _assign = __webpack_require__(32);
 
 var emptyObject = __webpack_require__(48);
 var _invariant = __webpack_require__(9);
@@ -4807,114 +5057,15 @@ module.exports = factory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-
-/***/ }),
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -4935,12 +5086,10 @@ module.exports = emptyObject;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 
@@ -4948,6 +5097,7 @@ module.exports = emptyObject;
 var emptyFunction = __webpack_require__(26);
 var invariant = __webpack_require__(9);
 var warning = __webpack_require__(25);
+var assign = __webpack_require__(32);
 
 var ReactPropTypesSecret = __webpack_require__(27);
 var checkPropTypes = __webpack_require__(50);
@@ -5046,7 +5196,8 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     objectOf: createObjectOfTypeChecker,
     oneOf: createEnumTypeChecker,
     oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker
+    shape: createShapeTypeChecker,
+    exact: createStrictShapeTypeChecker,
   };
 
   /**
@@ -5261,7 +5412,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       if (typeof checker !== 'function') {
         warning(
           false,
-          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
           'received %s at index %s.',
           getPostfixForTypeWarning(checker),
           i
@@ -5312,6 +5463,36 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       }
       return null;
     }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createStrictShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      // We need to check all keys in case some are required but missing from
+      // props.
+      var allKeys = assign({}, props[propName], shapeTypes);
+      for (var key in allKeys) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+
     return createChainableTypeChecker(validate);
   }
 
@@ -5455,12 +5636,10 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 
@@ -5494,7 +5673,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
         try {
           // This is intentionally an invariant that gets caught. It's the same
           // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
           error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
         } catch (ex) {
           error = ex;
@@ -5524,12 +5703,10 @@ module.exports = checkPropTypes;
 
 "use strict";
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 
@@ -5574,7 +5751,8 @@ module.exports = function() {
     objectOf: getShim,
     oneOf: getShim,
     oneOfType: getShim,
-    shape: getShim
+    shape: getShim,
+    exact: getShim
   };
 
   ReactPropTypes.checkPropTypes = emptyFunction;
@@ -6094,7 +6272,7 @@ module.exports = UserAgent_DEPRECATED;
 
 
 
-var _ExecutionEnvironment = __webpack_require__(33);
+var _ExecutionEnvironment = __webpack_require__(34);
 
 var _ExecutionEnvironment2 = _interopRequireDefault(_ExecutionEnvironment);
 
@@ -6517,7 +6695,7 @@ var _ReactComponentWithPureRenderMixin = __webpack_require__(10);
 
 var _ReactComponentWithPureRenderMixin2 = _interopRequireDefault(_ReactComponentWithPureRenderMixin);
 
-var _ReactWheelHandler = __webpack_require__(32);
+var _ReactWheelHandler = __webpack_require__(33);
 
 var _ReactWheelHandler2 = _interopRequireDefault(_ReactWheelHandler);
 
@@ -7206,7 +7384,7 @@ var _BrowserSupportCore = __webpack_require__(65);
 
 var _BrowserSupportCore2 = _interopRequireDefault(_BrowserSupportCore);
 
-var _getVendorPrefixedName = __webpack_require__(34);
+var _getVendorPrefixedName = __webpack_require__(35);
 
 var _getVendorPrefixedName2 = _interopRequireDefault(_getVendorPrefixedName);
 
@@ -7251,7 +7429,7 @@ module.exports = translateDOMPositionXY;
 "use strict";
 
 
-var _getVendorPrefixedName = __webpack_require__(34);
+var _getVendorPrefixedName = __webpack_require__(35);
 
 var _getVendorPrefixedName2 = _interopRequireDefault(_getVendorPrefixedName);
 
@@ -7359,7 +7537,7 @@ var _FixedDataTableRowBuffer = __webpack_require__(68);
 
 var _FixedDataTableRowBuffer2 = _interopRequireDefault(_FixedDataTableRowBuffer);
 
-var _FixedDataTableRow = __webpack_require__(35);
+var _FixedDataTableRow = __webpack_require__(36);
 
 var _FixedDataTableRow2 = _interopRequireDefault(_FixedDataTableRow);
 
@@ -7404,6 +7582,7 @@ var FixedDataTableBufferedRows = (0, _createReactClass2.default)({
     onRowClick: _propTypes2.default.func,
     onRowDoubleClick: _propTypes2.default.func,
     onRowMouseDown: _propTypes2.default.func,
+    onRowMouseUp: _propTypes2.default.func,
     onRowMouseEnter: _propTypes2.default.func,
     onRowMouseLeave: _propTypes2.default.func,
     rowClassNameGetter: _propTypes2.default.func,
@@ -7507,8 +7686,15 @@ var FixedDataTableBufferedRows = (0, _createReactClass2.default)({
         onClick: props.onRowClick,
         onDoubleClick: props.onRowDoubleClick,
         onMouseDown: props.onRowMouseDown,
+        onMouseUp: props.onRowMouseUp,
         onMouseEnter: props.onRowMouseEnter,
         onMouseLeave: props.onRowMouseLeave,
+        onCellClick: props.onCellClick,
+        onCellDoubleClick: props.onCellDoubleClick,
+        activeRowIndex: props.activeRowIndex,
+        activeColumnKey: props.activeColumnKey,
+        editingRowIndex: props.editingRowIndex,
+        editingColumnKey: props.editingColumnKey,
         className: (0, _joinClasses2.default)(rowClassNameGetter(rowIndex), (0, _cx2.default)('public/fixedDataTable/bodyRow'), (0, _cx2.default)({
           'fixedDataTableLayout/hasBottomBorder': hasBottomBorder,
           'public/fixedDataTable/hasBottomBorder': hasBottomBorder
@@ -8076,7 +8262,7 @@ module.exports = Heap;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _FixedDataTableHelper = __webpack_require__(36);
+var _FixedDataTableHelper = __webpack_require__(37);
 
 var _FixedDataTableHelper2 = _interopRequireDefault(_FixedDataTableHelper);
 
@@ -8225,7 +8411,13 @@ var FixedDataTableCellGroupImpl = (0, _createReactClass2.default)({
       left: left,
       cell: columnProps.cell,
       columnGroupWidth: columnGroupWidth,
-      pureRendering: pureRendering
+      pureRendering: pureRendering,
+      onCellClick: this.props.onCellClick,
+      onCellDoubleClick: this.props.onCellDoubleClick,
+      activeRowIndex: this.props.activeRowIndex,
+      activeColumnKey: this.props.activeColumnKey,
+      editingRowIndex: this.props.editingRowIndex,
+      editingColumnKey: this.props.editingColumnKey
     });
   },
   _getColumnsWidth: function _getColumnsWidth( /*array*/columns) /*number*/{
@@ -8320,7 +8512,7 @@ module.exports = FixedDataTableCellGroup;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _FixedDataTableCellDefault = __webpack_require__(39);
+var _FixedDataTableCellDefault = __webpack_require__(40);
 
 var _FixedDataTableCellDefault2 = _interopRequireDefault(_FixedDataTableCellDefault);
 
@@ -8328,7 +8520,7 @@ var _FixedDataTableColumnReorderHandle = __webpack_require__(73);
 
 var _FixedDataTableColumnReorderHandle2 = _interopRequireDefault(_FixedDataTableColumnReorderHandle);
 
-var _FixedDataTableHelper = __webpack_require__(36);
+var _FixedDataTableHelper = __webpack_require__(37);
 
 var _FixedDataTableHelper2 = _interopRequireDefault(_FixedDataTableHelper);
 
@@ -8352,7 +8544,7 @@ var _joinClasses = __webpack_require__(8);
 
 var _joinClasses2 = _interopRequireDefault(_joinClasses);
 
-var _shallowEqual = __webpack_require__(40);
+var _shallowEqual = __webpack_require__(41);
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -8427,7 +8619,10 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     /**
      * Flag for enhanced performance check
      */
-    pureRendering: _propTypes2.default.bool
+    pureRendering: _propTypes2.default.bool,
+
+    onCellClick: _propTypes2.default.func,
+    onCellDoubleClick: _propTypes2.default.func
   },
 
   getInitialState: function getInitialState() {
@@ -8542,7 +8737,15 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
   getDefaultProps: function getDefaultProps() /*object*/{
     return DEFAULT_PROPS;
   },
+  _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
+  },
+  _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
+    this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e);
+  },
   render: function render() /*object*/{
+    var _this = this;
+
     var _props2 = this.props,
         height = _props2.height,
         width = _props2.width,
@@ -8565,12 +8768,16 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
       style.zIndex = 1;
     }
 
+    var isActiveCell = props.activeRowIndex == props.rowIndex && props.activeColumnKey == columnKey;
+    var isEditingCell = props.editingRowIndex == props.rowIndex && props.editingColumnKey == columnKey;
+
     var className = (0, _joinClasses2.default)((0, _cx2.default)({
       'fixedDataTableCellLayout/main': true,
       'fixedDataTableCellLayout/lastChild': props.lastChild,
       'fixedDataTableCellLayout/alignRight': props.align === 'right',
       'fixedDataTableCellLayout/alignCenter': props.align === 'center',
       'public/fixedDataTableCell/alignRight': props.align === 'right',
+      'public/fixedDataTableCell/editing': isActiveCell,
       'public/fixedDataTableCell/highlighted': props.highlighted,
       'public/fixedDataTableCell/main': true,
       'public/fixedDataTableCell/hasReorderHandle': !!props.onColumnReorder,
@@ -8608,7 +8815,15 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     var cellProps = {
       columnKey: columnKey,
       height: height,
-      width: width
+      width: width,
+      onClick: function onClick(e) {
+        return _this._onCellClick(props.rowIndex, columnKey, e);
+      },
+      onDoubleClick: function onDoubleClick(e) {
+        return _this._onCellDoubleClick(props.rowIndex, columnKey, e);
+      },
+      isActiveCell: isActiveCell,
+      isEditingCell: isEditingCell
     };
 
     if (props.rowIndex >= 0) {

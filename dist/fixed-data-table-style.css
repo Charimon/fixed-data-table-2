@@ -92,8 +92,7 @@
 }
 .public_fixedDataTableCell_hasReorderHandle .public_fixedDataTableCell_cellContent {
 	margin-left: 12px;
-}
-/**
+}/**
  * Column reorder goodies.
  */
 .fixedDataTableCellLayout_columnReorderContainer {
@@ -165,7 +164,21 @@
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
-/**
+
+.public_fixedDataTableCell_editing:after,
+.public_fixedDataTableRow_highlighted .public_fixedDataTableCell_editing:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(0,0,0,0.2);
+  z-index: 2;
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.6);
+          box-shadow: inset 0 0 5px rgba(0,0,0,0.6);
+  pointer-events: none;
+}/**
  * Copyright Schrodinger, LLC
  * All rights reserved.
  *

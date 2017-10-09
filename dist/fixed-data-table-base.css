@@ -24,7 +24,6 @@
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   left: 0;
-  overflow: hidden;
   position: absolute;
   top: 0;
   white-space: nowrap;
@@ -58,7 +57,6 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   display: block;
-  overflow: hidden;
   position: absolute;
   white-space: normal;
 }
@@ -108,8 +106,7 @@
   right: 0px;
   visibility: hidden;
   width: 4px;
-}
-/**
+}/**
  * Copyright Schrodinger, LLC
  * All rights reserved.
  *
@@ -192,7 +189,6 @@ body[dir="rtl"] .fixedDataTableColumnResizerLineLayout_main {
 }
 
 .fixedDataTableLayout_rowsContainer {
-  overflow: hidden;
   position: relative;
 }
 
@@ -214,7 +210,6 @@ body[dir="rtl"] .fixedDataTableColumnResizerLineLayout_main {
 .fixedDataTableRowLayout_main {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  overflow: hidden;
   position: absolute;
   top: 0;
 }

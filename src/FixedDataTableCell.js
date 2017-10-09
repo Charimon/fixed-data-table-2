@@ -233,6 +233,10 @@ var FixedDataTableCell = createReactClass({
 
     const isActiveCell = props.activeRowIndex == props.rowIndex && props.activeColumnKey == columnKey
 
+    if(isActiveCell) {
+      style.background = "red"
+    }
+
     var className = joinClasses(
       cx({
         'fixedDataTableCellLayout/main': true,

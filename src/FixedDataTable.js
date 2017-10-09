@@ -770,20 +770,102 @@ var FixedDataTable = createReactClass({
     );
   },
 
+  _handleDocClick() {
+    this._unbindEvents();
+    this.setState(state => Object.assign({}, state, {
+      activeRowIndex: null,
+      activeColumnKey: null,
+      isActiveEditing: false,
+    }))
+  },
+
+  _handleDocKeydown(e) {
+    const columnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey)
+    if(e.key == "ArrowRight" && !this.state.isActiveEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex, columnIndex+1, false, e.shiftKey, false, true);
+    } else if(e.key == "ArrowLeft" && !this.state.isActiveEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex, columnIndex-1, false, e.shiftKey, false, true);
+    } else if(e.key == "ArrowUp" && !this.state.isActiveEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex-1, columnIndex, false, e.shiftKey, false, true);
+    } else if(e.key == "ArrowDown" && !this.state.isActiveEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex+1, columnIndex, false, e.shiftKey, false, true);
+    } else if(e.key == "Enter") {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex, columnIndex, true);
+    } else if(e.key == "Escape" && !this.state.isActiveEditing) {
+      e.preventDefault();
+      this.selectCell();
+    // } else if(e.key == "Escape" && this.state.editingColumn != null && this.state.editingRow != null) {
+    //   e.preventDefault();
+    //   this.selectCell(this.state.activeRowIndex, columnIndex, false);
+    }
+  },
+
+  _bindEvents() {
+    this._unbindEvents();
+    document.addEventListener("click", this._handleDocClick);
+    document.addEventListener("keydown", this._handleDocKeydown);
+    // document.onselectstart = () => false;
+  },
+  _unbindEvents() {
+    document.removeEventListener("click", this._handleDocClick);
+    document.removeEventListener("keydown", this._handleDocKeydown);
+    // document.onselectstart = null;
+  },
+
   _onCellClick(rowIndex, columnKey, e) {
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,
-      isActiveEditing: false,
+      // isActiveEditing: false,
     }))
+    this._bindEvents()
   },
 
   _onCellDoubleClick(rowIndex, columnKey, e) {
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,
-      isActiveEditing: true,
+      // isActiveEditing: true,
     }))
+  },
+
+  selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
+    if(rowIndex == null || columnIndex == null) {
+      this.setState(state => Object.assign({}, state, {
+        activeRowIndex: null,
+        activeColumnKey: null,
+        // activeColumn: null,
+        // activeRow: null,
+        // editingColumn: null,
+        // editingRow: null,
+      }))
+      this.unbindEvents()
+      return
+    }
+
+    const columnCount = this.state.columns.length;
+    const rowCount = this.props.rowsCount;
+    const potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), (rowCount - 1));
+    const potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), (columnCount - 1));
+    
+    const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
+
+    const newState = this._calculateState(Object.assign({}, this.props, {
+      scrollToRow: potentialActiveRowIndex,
+      scrollToColumn: potentialActiveColumnIndex
+    }), this.state)
+
+    this.setState(state => Object.assign({}, newState, {
+      activeRowIndex: potentialActiveRowIndex,
+      activeColumnKey: columnKey,
+    }))
+
+    
   },
 
   /**

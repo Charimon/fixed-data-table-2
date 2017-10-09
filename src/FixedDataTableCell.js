@@ -232,10 +232,7 @@ var FixedDataTableCell = createReactClass({
     }
 
     const isActiveCell = props.activeRowIndex == props.rowIndex && props.activeColumnKey == columnKey
-
-    if(isActiveCell) {
-      style.background = "red"
-    }
+    const isEditingCell = props.isActiveEditing && isActiveCell;
 
     var className = joinClasses(
       cx({
@@ -244,10 +241,11 @@ var FixedDataTableCell = createReactClass({
         'fixedDataTableCellLayout/alignRight': props.align === 'right',
         'fixedDataTableCellLayout/alignCenter': props.align === 'center',
         'public/fixedDataTableCell/alignRight': props.align === 'right',
+        'public/fixedDataTableCell/editing': isActiveCell,
         'public/fixedDataTableCell/highlighted': props.highlighted,
         'public/fixedDataTableCell/main': true,
         'public/fixedDataTableCell/hasReorderHandle': !!props.onColumnReorder,
-        'public/fixedDataTableCell/reordering': this.state.isReorderingThisColumn,
+        'public/fixedDataTableCell/reordering': this.state.isReorderingThisColumn
       }),
       props.className,
     );
@@ -292,6 +290,7 @@ var FixedDataTableCell = createReactClass({
       onClick: e => this._onCellClick(props.rowIndex, columnKey, e),
       onDoubleClick: e => this._onCellDoubleClick(props.rowIndex, columnKey, e),
       isActiveCell,
+      isEditingCell,
     };
 
     if (props.rowIndex >= 0) {

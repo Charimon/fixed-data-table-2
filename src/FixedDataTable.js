@@ -799,9 +799,9 @@ var FixedDataTable = createReactClass({
     } else if(e.key == "Escape" && !this.state.isActiveEditing) {
       e.preventDefault();
       this.selectCell();
-    // } else if(e.key == "Escape" && this.state.editingColumn != null && this.state.editingRow != null) {
-    //   e.preventDefault();
-    //   this.selectCell(this.state.activeRowIndex, columnIndex, false);
+    } else if(e.key == "Escape" && this.state.isActiveEditing) {
+      e.preventDefault();
+      this.selectCell(this.state.activeRowIndex, columnIndex, false);
     }
   },
 
@@ -821,7 +821,7 @@ var FixedDataTable = createReactClass({
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,
-      // isActiveEditing: false,
+      isActiveEditing: false,
     }))
     this._bindEvents()
   },
@@ -830,7 +830,7 @@ var FixedDataTable = createReactClass({
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,
-      // isActiveEditing: true,
+      isActiveEditing: true,
     }))
   },
 
@@ -839,12 +839,11 @@ var FixedDataTable = createReactClass({
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: null,
         activeColumnKey: null,
-        // activeColumn: null,
-        // activeRow: null,
+        isActiveEditing: false,
         // editingColumn: null,
         // editingRow: null,
       }))
-      this.unbindEvents()
+      this._unbindEvents()
       return
     }
 
@@ -855,17 +854,13 @@ var FixedDataTable = createReactClass({
     
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
 
-    const newState = this._calculateState(Object.assign({}, this.props, {
+    this.setState(this._calculateState(Object.assign({}, this.props, {
       scrollToRow: potentialActiveRowIndex,
-      scrollToColumn: potentialActiveColumnIndex
-    }), this.state)
-
-    this.setState(state => Object.assign({}, newState, {
+      scrollToColumn: potentialActiveColumnIndex,
       activeRowIndex: potentialActiveRowIndex,
       activeColumnKey: columnKey,
-    }))
-
-    
+      isActiveEditing: editing,
+    }), this.state))
   },
 
   /**

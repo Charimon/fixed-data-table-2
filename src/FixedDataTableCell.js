@@ -231,8 +231,8 @@ var FixedDataTableCell = createReactClass({
       style.zIndex = 1;
     }
 
-    const isActiveCell = props.activeRowIndex == props.rowIndex && props.activeColumnKey == columnKey
-    const isEditingCell = props.isActiveEditing && isActiveCell;
+    const isActiveCell = props.activeRowIndex == props.rowIndex && props.activeColumnKey == columnKey;
+    const isEditingCell = props.editingRowIndex == props.rowIndex && props.editingColumnKey == columnKey;
 
     var className = joinClasses(
       cx({

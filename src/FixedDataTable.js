@@ -367,6 +367,9 @@ var FixedDataTable = createReactClass({
      * half of the number of visible rows.
      */
     bufferRowCount: PropTypes.number,
+
+
+    onSelectCells: PropTypes.func,
   },
 
   getDefaultProps() /*object*/ {
@@ -542,7 +545,8 @@ var FixedDataTable = createReactClass({
           onCellDoubleClick={this._onCellDoubleClick}
           activeRowIndex={state.activeRowIndex}
           activeColumnKey={state.activeColumnKey}
-          isActiveEditing={state.isActiveEditing}
+          editingRowIndex={state.editingRowIndex}
+          editingColumnKey={state.editingColumnKey}
         />
       );
     }
@@ -635,7 +639,8 @@ var FixedDataTable = createReactClass({
           onCellDoubleClick={this._onCellDoubleClick}
           activeRowIndex={state.activeRowIndex}
           activeColumnKey={state.activeColumnKey}
-          isActiveEditing={state.isActiveEditing}
+          editingRowIndex={state.editingRowIndex}
+          editingColumnKey={state.editingColumnKey}
         />;
     }
 
@@ -667,7 +672,8 @@ var FixedDataTable = createReactClass({
         onCellDoubleClick={this._onCellDoubleClick}
         activeRowIndex={state.activeRowIndex}
         activeColumnKey={state.activeColumnKey}
-        isActiveEditing={state.isActiveEditing}
+        editingRowIndex={state.editingRowIndex}
+        editingColumnKey={state.editingColumnKey}
       />;
 
     var topShadow;
@@ -765,7 +771,8 @@ var FixedDataTable = createReactClass({
         onCellDoubleClick={this._onCellDoubleClick}
         activeRowIndex={state.activeRowIndex}
         activeColumnKey={state.activeColumnKey}
-        isActiveEditing={state.isActiveEditing}
+        editingRowIndex={state.editingRowIndex}
+        editingColumnKey={state.editingColumnKey}
       />
     );
   },
@@ -775,31 +782,34 @@ var FixedDataTable = createReactClass({
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: null,
       activeColumnKey: null,
-      isActiveEditing: false,
+      editingRowIndex: null,
+      editingColumnKey: null,
     }))
   },
 
   _handleDocKeydown(e) {
+    const isEditing = this.state.editingRowIndex != null || this.state.editingColumnKey != null
+
     const columnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey)
-    if(e.key == "ArrowRight" && !this.state.isActiveEditing) {
+    if(e.key == "ArrowRight" && !isEditing) {
       e.preventDefault();
       this.selectCell(this.state.activeRowIndex, columnIndex+1, false, e.shiftKey, false, true);
-    } else if(e.key == "ArrowLeft" && !this.state.isActiveEditing) {
+    } else if(e.key == "ArrowLeft" && !isEditing) {
       e.preventDefault();
       this.selectCell(this.state.activeRowIndex, columnIndex-1, false, e.shiftKey, false, true);
-    } else if(e.key == "ArrowUp" && !this.state.isActiveEditing) {
+    } else if(e.key == "ArrowUp" && !isEditing) {
       e.preventDefault();
       this.selectCell(this.state.activeRowIndex-1, columnIndex, false, e.shiftKey, false, true);
-    } else if(e.key == "ArrowDown" && !this.state.isActiveEditing) {
+    } else if(e.key == "ArrowDown" && !isEditing) {
       e.preventDefault();
       this.selectCell(this.state.activeRowIndex+1, columnIndex, false, e.shiftKey, false, true);
     } else if(e.key == "Enter") {
       e.preventDefault();
       this.selectCell(this.state.activeRowIndex, columnIndex, true);
-    } else if(e.key == "Escape" && !this.state.isActiveEditing) {
+    } else if(e.key == "Escape" && !isEditing) {
       e.preventDefault();
       this.selectCell();
-    } else if(e.key == "Escape" && this.state.isActiveEditing) {
+    } else if(e.key == "Escape" && isEditing) {
       e.preventDefault();
       this.selectCell(this.state.activeRowIndex, columnIndex, false);
     }
@@ -821,7 +831,8 @@ var FixedDataTable = createReactClass({
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,
-      isActiveEditing: false,
+      editingRowIndex: null,
+      editingColumnKey: null,
     }))
     this._bindEvents()
   },
@@ -830,7 +841,8 @@ var FixedDataTable = createReactClass({
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,
-      isActiveEditing: true,
+      editingRowIndex: rowIndex,
+      editingColumnKey: columnKey,
     }))
   },
 
@@ -839,9 +851,8 @@ var FixedDataTable = createReactClass({
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: null,
         activeColumnKey: null,
-        isActiveEditing: false,
-        // editingColumn: null,
-        // editingRow: null,
+        editingRowIndex: null,
+        editingColumnKey: null,
       }))
       this._unbindEvents()
       return
@@ -859,8 +870,11 @@ var FixedDataTable = createReactClass({
       scrollToColumn: potentialActiveColumnIndex,
       activeRowIndex: potentialActiveRowIndex,
       activeColumnKey: columnKey,
-      isActiveEditing: editing,
+      editingRowIndex: editing?potentialActiveRowIndex:null,
+      editingColumnKey: editing?columnKey:null,
     }), this.state))
+
+    this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, activeColumnKey, editing)
   },
 
   /**

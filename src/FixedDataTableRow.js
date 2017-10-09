@@ -158,7 +158,8 @@ class FixedDataTableRowImpl extends React.Component {
         onCellDoubleClick={this.props.onCellDoubleClick}
         activeRowIndex={this.props.activeRowIndex}
         activeColumnKey={this.props.activeColumnKey}
-        isActiveEditing={this.props.isActiveEditing}
+        editingRowIndex={this.props.editingRowIndex}
+        editingColumnKey={this.props.editingColumnKey}
       />;
     var columnsLeftShadow = this._renderColumnsLeftShadow(fixedColumnsWidth);
     var scrollableColumns =
@@ -183,7 +184,8 @@ class FixedDataTableRowImpl extends React.Component {
         onCellDoubleClick={this.props.onCellDoubleClick}
         activeRowIndex={this.props.activeRowIndex}
         activeColumnKey={this.props.activeColumnKey}
-        isActiveEditing={this.props.isActiveEditing}
+        editingRowIndex={this.props.editingRowIndex}
+        editingColumnKey={this.props.editingColumnKey}
       />;
     var scrollableColumnsWidth = this._getColumnsWidth(this.props.scrollableColumns);
     var columnsRightShadow = this._renderColumnsRightShadow(fixedColumnsWidth + scrollableColumnsWidth);
@@ -359,7 +361,8 @@ class FixedDataTableRow extends React.Component {
           onCellDoubleClick={this.props.onCellDoubleClick}
           activeRowIndex={this.props.activeRowIndex}
           activeColumnKey={this.props.activeColumnKey}
-          isActiveEditing={this.props.isActiveEditing}
+          editingRowIndex={this.props.editingRowIndex}
+          editingColumnKey={this.props.editingColumnKey}
         />
       </div>
     );

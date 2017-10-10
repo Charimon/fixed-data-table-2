@@ -214,12 +214,12 @@ var FixedDataTableCellGroup = createReactClass({
   },
 
   render() /*object*/ {
-    var {offsetLeft, ...props} = this.props;
+    var {offsetLeft, style, ...props} = this.props;
 
-    var style = {
+    var style = Object.assign({}, style, {
       height: props.height,
-      width: props.width
-    };
+      width: props.width,
+    });
 
     if (DIR_SIGN === 1) {
       style.left = offsetLeft;

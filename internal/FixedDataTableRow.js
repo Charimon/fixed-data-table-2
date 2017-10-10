@@ -170,6 +170,7 @@ var FixedDataTableRowImpl = function (_React$Component) {
       var columnsLeftShadow = this._renderColumnsLeftShadow(fixedColumnsWidth);
       var scrollableColumns = _React2.default.createElement(_FixedDataTableCellGroup2.default, {
         key: 'scrollable_cells',
+        style: this.props.fixedColumns.length > 0 ? { marginLeft: 1 } : null,
         isScrolling: this.props.isScrolling,
         height: this.props.height,
         left: this.props.scrollLeft,

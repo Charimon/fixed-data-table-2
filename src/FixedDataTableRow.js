@@ -165,6 +165,7 @@ class FixedDataTableRowImpl extends React.Component {
     var scrollableColumns =
       <FixedDataTableCellGroup
         key="scrollable_cells"
+        style={this.props.fixedColumns.length>0?{marginLeft: 1}:null}
         isScrolling={this.props.isScrolling}
         height={this.props.height}
         left={this.props.scrollLeft}

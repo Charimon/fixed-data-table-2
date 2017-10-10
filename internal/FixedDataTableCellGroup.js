@@ -217,12 +217,13 @@ var FixedDataTableCellGroup = (0, _createReactClass2.default)({
   render: function render() /*object*/{
     var _props = this.props,
         offsetLeft = _props.offsetLeft,
-        props = _objectWithoutProperties(_props, ['offsetLeft']);
+        style = _props.style,
+        props = _objectWithoutProperties(_props, ['offsetLeft', 'style']);
 
-    var style = {
+    var style = _extends({}, style, {
       height: props.height,
       width: props.width
-    };
+    });
 
     if (DIR_SIGN === 1) {
       style.left = offsetLeft;

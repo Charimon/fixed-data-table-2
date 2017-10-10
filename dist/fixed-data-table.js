@@ -1,5 +1,5 @@
 /**
- * FixedDataTable v0.8.5 
+ * FixedDataTable v0.8.6 
  *
  * Copyright Schrodinger, LLC
  * All rights reserved.
@@ -1797,6 +1797,7 @@ var FixedDataTableRowImpl = function (_React$Component) {
       var columnsLeftShadow = this._renderColumnsLeftShadow(fixedColumnsWidth);
       var scrollableColumns = _React2.default.createElement(_FixedDataTableCellGroup2.default, {
         key: 'scrollable_cells',
+        style: this.props.fixedColumns.length > 0 ? { marginLeft: 1 } : null,
         isScrolling: this.props.isScrolling,
         height: this.props.height,
         left: this.props.scrollLeft,
@@ -2754,7 +2755,7 @@ var FixedDataTableRoot = {
   Table: _FixedDataTable2.default
 };
 
-FixedDataTableRoot.version = '0.8.5';
+FixedDataTableRoot.version = '0.8.6';
 module.exports = FixedDataTableRoot;
 
 /***/ }),
@@ -8465,12 +8466,13 @@ var FixedDataTableCellGroup = (0, _createReactClass2.default)({
   render: function render() /*object*/{
     var _props = this.props,
         offsetLeft = _props.offsetLeft,
-        props = _objectWithoutProperties(_props, ['offsetLeft']);
+        style = _props.style,
+        props = _objectWithoutProperties(_props, ['offsetLeft', 'style']);
 
-    var style = {
+    var style = _extends({}, style, {
       height: props.height,
       width: props.width
-    };
+    });
 
     if (DIR_SIGN === 1) {
       style.left = offsetLeft;

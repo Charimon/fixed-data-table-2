@@ -228,6 +228,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     return DEFAULT_PROPS;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    debugger;
     this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
@@ -267,7 +268,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
       'fixedDataTableCellLayout/alignRight': props.align === 'right',
       'fixedDataTableCellLayout/alignCenter': props.align === 'center',
       'public/fixedDataTableCell/alignRight': props.align === 'right',
-      'public/fixedDataTableCell/editing': isActiveCell,
+      'public/fixedDataTableCell/active': isActiveCell,
       'public/fixedDataTableCell/highlighted': props.highlighted,
       'public/fixedDataTableCell/main': true,
       'public/fixedDataTableCell/hasReorderHandle': !!props.onColumnReorder,

@@ -1,5 +1,5 @@
 /**
- * FixedDataTable v0.8.3 
+ * FixedDataTable v0.8.4 
  *
  * Copyright Schrodinger, LLC
  * All rights reserved.
@@ -2573,6 +2573,7 @@ var FixedDataTableCellDefault = function (_React$Component) {
         height: height,
         width: width
       }, style);
+      debugger;
 
       return _React2.default.createElement(
         'div',
@@ -2754,7 +2755,7 @@ var FixedDataTableRoot = {
   Table: _FixedDataTable2.default
 };
 
-FixedDataTableRoot.version = '0.8.3';
+FixedDataTableRoot.version = '0.8.4';
 module.exports = FixedDataTableRoot;
 
 /***/ }),
@@ -8738,6 +8739,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     return DEFAULT_PROPS;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    debugger;
     this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
@@ -8777,7 +8779,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
       'fixedDataTableCellLayout/alignRight': props.align === 'right',
       'fixedDataTableCellLayout/alignCenter': props.align === 'center',
       'public/fixedDataTableCell/alignRight': props.align === 'right',
-      'public/fixedDataTableCell/editing': isActiveCell,
+      'public/fixedDataTableCell/active': isActiveCell,
       'public/fixedDataTableCell/highlighted': props.highlighted,
       'public/fixedDataTableCell/main': true,
       'public/fixedDataTableCell/hasReorderHandle': !!props.onColumnReorder,

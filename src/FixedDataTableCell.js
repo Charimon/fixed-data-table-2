@@ -204,6 +204,7 @@ var FixedDataTableCell = createReactClass({
   },
 
   _onCellClick(rowIndex, columnKey, e) {
+    debugger
     this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e)
   },
 
@@ -241,7 +242,7 @@ var FixedDataTableCell = createReactClass({
         'fixedDataTableCellLayout/alignRight': props.align === 'right',
         'fixedDataTableCellLayout/alignCenter': props.align === 'center',
         'public/fixedDataTableCell/alignRight': props.align === 'right',
-        'public/fixedDataTableCell/editing': isActiveCell,
+        'public/fixedDataTableCell/active': isActiveCell,
         'public/fixedDataTableCell/highlighted': props.highlighted,
         'public/fixedDataTableCell/main': true,
         'public/fixedDataTableCell/hasReorderHandle': !!props.onColumnReorder,

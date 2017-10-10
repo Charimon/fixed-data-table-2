@@ -82,7 +82,6 @@ class FixedDataTableCellDefault extends React.Component {
       width,
       ...style,
     };
-    debugger
 
     return (
       <div

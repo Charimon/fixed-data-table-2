@@ -92,7 +92,6 @@ var FixedDataTableCellDefault = function (_React$Component) {
         height: height,
         width: width
       }, style);
-      debugger;
 
       return _React2.default.createElement(
         'div',

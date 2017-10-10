@@ -1,5 +1,5 @@
 /**
- * FixedDataTable v0.8.4 
+ * FixedDataTable v0.8.5 
  *
  * Copyright Schrodinger, LLC
  * All rights reserved.
@@ -2573,7 +2573,6 @@ var FixedDataTableCellDefault = function (_React$Component) {
         height: height,
         width: width
       }, style);
-      debugger;
 
       return _React2.default.createElement(
         'div',
@@ -2755,7 +2754,7 @@ var FixedDataTableRoot = {
   Table: _FixedDataTable2.default
 };
 
-FixedDataTableRoot.version = '0.8.4';
+FixedDataTableRoot.version = '0.8.5';
 module.exports = FixedDataTableRoot;
 
 /***/ }),
@@ -8739,7 +8738,6 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     return DEFAULT_PROPS;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
-    debugger;
     this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {

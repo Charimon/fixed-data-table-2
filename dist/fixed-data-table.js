@@ -1,5 +1,5 @@
 /**
- * FixedDataTable v0.8.6 
+ * FixedDataTable v0.8.7 
  *
  * Copyright Schrodinger, LLC
  * All rights reserved.
@@ -2465,7 +2465,17 @@ FixedDataTableColumn.propTypes = {
    * Flag to enable performance check when rendering. Stops the component from
    * rendering if none of it's passed in props have changed
    */
-  pureRendering: _propTypes2.default.bool
+  pureRendering: _propTypes2.default.bool,
+
+  /**
+   * Whether the column can be edited
+   */
+  areCellsEditable: _propTypes2.default.bool,
+
+  /**
+   * Whether the column can be selected or skipped when using keys
+   */
+  areCellsSelectable: _propTypes2.default.bool
 };
 FixedDataTableColumn.defaultProps = {
   allowCellsRecycling: false,
@@ -2755,7 +2765,7 @@ var FixedDataTableRoot = {
   Table: _FixedDataTable2.default
 };
 
-FixedDataTableRoot.version = '0.8.6';
+FixedDataTableRoot.version = '0.8.7';
 module.exports = FixedDataTableRoot;
 
 /***/ }),
@@ -3590,6 +3600,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
     });
   },
   selectCell: function selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
+    var _this2 = this;
+
     if (rowIndex == null || columnIndex == null) {
       this.setState(function (state) {
         return _extends({}, state, {
@@ -3607,6 +3619,38 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var rowCount = this.props.rowsCount;
     var potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), rowCount - 1);
     var potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), columnCount - 1);
+    var activeColumnIndex = this.state.columns.findIndex(function (col) {
+      return col.props.columnKey == _this2.state.activeColumnKey;
+    });
+
+    var canEdit = this.state.columns[potentialActiveColumnIndex].props.areCellsEditable;
+    var canSelect = this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable;
+    var areColumnsSelectable = this.state.columns.map(function (c) {
+      return c.props.areCellsSelectable;
+    });
+    if (potentialActiveColumnIndex > activeColumnIndex) {
+      //check if any columns to right are "selectable"
+      var sliced = areColumnsSelectable.slice(potentialActiveColumnIndex);
+      var firstSelectable = sliced.findIndex(function (selectable) {
+        return selectable;
+      });
+      if (firstSelectable >= 0) {
+        potentialActiveColumnIndex += firstSelectable;
+      }
+    } else if (potentialActiveColumnIndex < activeColumnIndex) {
+      //check if any columns to left are "selectable"
+      var _sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex + 1);
+      _sliced.reverse();
+      var _firstSelectable = _sliced.findIndex(function (selectable) {
+        return selectable;
+      });
+      if (_firstSelectable >= 0) {
+        potentialActiveColumnIndex -= _firstSelectable;
+      }
+    }
+    //check if any columns you're trying to go to is "selectable"
+    //if not, stay on currently selected column
+    if (!areColumnsSelectable[potentialActiveColumnIndex]) potentialActiveColumnIndex = activeColumnIndex;
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;
 
@@ -3615,8 +3659,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
       scrollToColumn: potentialActiveColumnIndex,
       activeRowIndex: potentialActiveRowIndex,
       activeColumnKey: columnKey,
-      editingRowIndex: editing ? potentialActiveRowIndex : null,
-      editingColumnKey: editing ? columnKey : null
+      editingRowIndex: canEdit && editing ? potentialActiveRowIndex : null,
+      editingColumnKey: canEdit && editing ? columnKey : null
     }), this.state));
 
     this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, activeColumnKey, editing);
@@ -8418,7 +8462,9 @@ var FixedDataTableCellGroupImpl = (0, _createReactClass2.default)({
       activeRowIndex: this.props.activeRowIndex,
       activeColumnKey: this.props.activeColumnKey,
       editingRowIndex: this.props.editingRowIndex,
-      editingColumnKey: this.props.editingColumnKey
+      editingColumnKey: this.props.editingColumnKey,
+      isCellEditable: columnProps.areCellsEditable,
+      isCellSelectable: columnProps.areCellsSelectable
     });
   },
   _getColumnsWidth: function _getColumnsWidth( /*array*/columns) /*number*/{
@@ -8818,12 +8864,12 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
       columnKey: columnKey,
       height: height,
       width: width,
-      onClick: function onClick(e) {
+      onClick: this.props.isCellSelectable ? function (e) {
         return _this._onCellClick(props.rowIndex, columnKey, e);
-      },
-      onDoubleClick: function onDoubleClick(e) {
+      } : null,
+      onDoubleClick: this.props.isCellEditable && this.props.isCellSelectable ? function (e) {
         return _this._onCellDoubleClick(props.rowIndex, columnKey, e);
-      },
+      } : null,
       isActiveCell: isActiveCell,
       isEditingCell: isEditingCell
     };

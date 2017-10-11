@@ -169,7 +169,9 @@ var FixedDataTableCellGroupImpl = (0, _createReactClass2.default)({
       activeRowIndex: this.props.activeRowIndex,
       activeColumnKey: this.props.activeColumnKey,
       editingRowIndex: this.props.editingRowIndex,
-      editingColumnKey: this.props.editingColumnKey
+      editingColumnKey: this.props.editingColumnKey,
+      isCellEditable: columnProps.areCellsEditable,
+      isCellSelectable: columnProps.areCellsSelectable
     });
   },
   _getColumnsWidth: function _getColumnsWidth( /*array*/columns) /*number*/{

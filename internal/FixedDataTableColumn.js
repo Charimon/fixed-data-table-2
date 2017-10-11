@@ -197,7 +197,17 @@ FixedDataTableColumn.propTypes = {
    * Flag to enable performance check when rendering. Stops the component from
    * rendering if none of it's passed in props have changed
    */
-  pureRendering: _propTypes2.default.bool
+  pureRendering: _propTypes2.default.bool,
+
+  /**
+   * Whether the column can be edited
+   */
+  areCellsEditable: _propTypes2.default.bool,
+
+  /**
+   * Whether the column can be selected or skipped when using keys
+   */
+  areCellsSelectable: _propTypes2.default.bool
 };
 FixedDataTableColumn.defaultProps = {
   allowCellsRecycling: false,

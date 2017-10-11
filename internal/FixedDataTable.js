@@ -825,6 +825,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
     });
   },
   selectCell: function selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
+    var _this2 = this;
+
     if (rowIndex == null || columnIndex == null) {
       this.setState(function (state) {
         return _extends({}, state, {
@@ -842,6 +844,38 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var rowCount = this.props.rowsCount;
     var potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), rowCount - 1);
     var potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), columnCount - 1);
+    var activeColumnIndex = this.state.columns.findIndex(function (col) {
+      return col.props.columnKey == _this2.state.activeColumnKey;
+    });
+
+    var canEdit = this.state.columns[potentialActiveColumnIndex].props.areCellsEditable;
+    var canSelect = this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable;
+    var areColumnsSelectable = this.state.columns.map(function (c) {
+      return c.props.areCellsSelectable;
+    });
+    if (potentialActiveColumnIndex > activeColumnIndex) {
+      //check if any columns to right are "selectable"
+      var sliced = areColumnsSelectable.slice(potentialActiveColumnIndex);
+      var firstSelectable = sliced.findIndex(function (selectable) {
+        return selectable;
+      });
+      if (firstSelectable >= 0) {
+        potentialActiveColumnIndex += firstSelectable;
+      }
+    } else if (potentialActiveColumnIndex < activeColumnIndex) {
+      //check if any columns to left are "selectable"
+      var _sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex + 1);
+      _sliced.reverse();
+      var _firstSelectable = _sliced.findIndex(function (selectable) {
+        return selectable;
+      });
+      if (_firstSelectable >= 0) {
+        potentialActiveColumnIndex -= _firstSelectable;
+      }
+    }
+    //check if any columns you're trying to go to is "selectable"
+    //if not, stay on currently selected column
+    if (!areColumnsSelectable[potentialActiveColumnIndex]) potentialActiveColumnIndex = activeColumnIndex;
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;
 
@@ -850,8 +884,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
       scrollToColumn: potentialActiveColumnIndex,
       activeRowIndex: potentialActiveRowIndex,
       activeColumnKey: columnKey,
-      editingRowIndex: editing ? potentialActiveRowIndex : null,
-      editingColumnKey: editing ? columnKey : null
+      editingRowIndex: canEdit && editing ? potentialActiveRowIndex : null,
+      editingColumnKey: canEdit && editing ? columnKey : null
     }), this.state));
 
     this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, activeColumnKey, editing);

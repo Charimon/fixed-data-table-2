@@ -204,11 +204,17 @@ var FixedDataTableCell = createReactClass({
   },
 
   _onCellClick(rowIndex, columnKey, e) {
-    this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e)
+    if(this.props.activeRowIndex == rowIndex && this.props.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation()
+    }
+    else this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e)
   },
 
   _onCellDoubleClick(rowIndex, columnKey, e) {
-    this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e)
+    if(this.props.activeRowIndex == rowIndex && this.props.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation()
+    }
+    else this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e)
   },
 
   render() /*object*/ {

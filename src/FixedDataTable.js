@@ -860,32 +860,38 @@ var FixedDataTable = createReactClass({
 
     const columnCount = this.state.columns.length;
     const rowCount = this.props.rowsCount;
-    const potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), (rowCount - 1));
+    let potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), (rowCount - 1));
     let potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), (columnCount - 1));
-    const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey)
+    const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey);
+    const activeRowIndex = this.state.activeRowIndex;
 
     const canEdit = this.state.columns[potentialActiveColumnIndex].props.areCellsEditable
     const canSelect = this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
     const areColumnsSelectable = this.state.columns.map(c => c.props.areCellsSelectable);
-    if(potentialActiveColumnIndex > activeColumnIndex) {
-      //check if any columns to right are "selectable"
-      const sliced = areColumnsSelectable.slice(potentialActiveColumnIndex)
-      const firstSelectable = sliced.findIndex(selectable => selectable)
-      if(firstSelectable >= 0) {
-        potentialActiveColumnIndex += firstSelectable
+    if(potentialActiveRowIndex >= 0) {
+      if(potentialActiveColumnIndex > activeColumnIndex) {
+        //check if any columns to right are "selectable"
+        const sliced = areColumnsSelectable.slice(potentialActiveColumnIndex)
+        const firstSelectable = sliced.findIndex(selectable => selectable)
+        if(firstSelectable >= 0) {
+          potentialActiveColumnIndex += firstSelectable
+        }
+      } else if(potentialActiveColumnIndex < activeColumnIndex) {
+        //check if any columns to left are "selectable"
+        const sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex+1)
+        sliced.reverse()
+        const firstSelectable = sliced.findIndex(selectable => selectable)
+        if(firstSelectable >= 0) {
+          potentialActiveColumnIndex -= firstSelectable
+        }
       }
-    } else if(potentialActiveColumnIndex < activeColumnIndex) {
-      //check if any columns to left are "selectable"
-      const sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex+1)
-      sliced.reverse()
-      const firstSelectable = sliced.findIndex(selectable => selectable)
-      if(firstSelectable >= 0) {
-        potentialActiveColumnIndex -= firstSelectable
+      //check if any columns you're trying to go to is "selectable"
+      //if not, stay on currently selected column
+      if(!areColumnsSelectable[potentialActiveColumnIndex]) {
+        potentialActiveColumnIndex = activeColumnIndex;
+        potentialActiveRowIndex = activeRowIndex;
       }
     }
-    //check if any columns you're trying to go to is "selectable"
-    //if not, stay on currently selected column
-    if(!areColumnsSelectable[potentialActiveColumnIndex]) potentialActiveColumnIndex = activeColumnIndex
 
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
 

@@ -750,7 +750,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       editingColumnKey: state.editingColumnKey
     });
   },
-  _handleDocClick: function _handleDocClick() {
+  _handleDocClick: function _handleDocClick(e) {
     this._unbindEvents();
     this.setState(function (state) {
       return _extends({}, state, {
@@ -804,6 +804,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     // document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    if (rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
     this.setState(function (state) {
       return _extends({}, state, {
         activeRowIndex: rowIndex,

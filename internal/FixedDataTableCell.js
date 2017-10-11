@@ -228,10 +228,14 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     return DEFAULT_PROPS;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
-    this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
+    if (this.props.activeRowIndex == rowIndex && this.props.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+    } else this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
-    this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e);
+    if (this.props.activeRowIndex == rowIndex && this.props.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+    } else this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e);
   },
   render: function render() /*object*/{
     var _this = this;

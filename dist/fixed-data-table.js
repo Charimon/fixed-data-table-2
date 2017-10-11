@@ -3525,7 +3525,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       editingColumnKey: state.editingColumnKey
     });
   },
-  _handleDocClick: function _handleDocClick() {
+  _handleDocClick: function _handleDocClick(e) {
     this._unbindEvents();
     this.setState(function (state) {
       return _extends({}, state, {
@@ -3579,6 +3579,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     // document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    if (rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
     this.setState(function (state) {
       return _extends({}, state, {
         activeRowIndex: rowIndex,
@@ -8792,10 +8793,14 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     return DEFAULT_PROPS;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
-    this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
+    if (this.props.activeRowIndex == rowIndex && this.props.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+    } else this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
-    this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e);
+    if (this.props.activeRowIndex == rowIndex && this.props.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+    } else this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e);
   },
   render: function render() /*object*/{
     var _this = this;

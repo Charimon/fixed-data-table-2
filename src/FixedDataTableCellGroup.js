@@ -132,7 +132,7 @@ var FixedDataTableCellGroupImpl = createReactClass({
 
     var className = columnProps.cellClassName;
     var pureRendering = columnProps.pureRendering || false;
-
+    
     return (
       <FixedDataTableCell
         isScrolling={this.props.isScrolling}
@@ -161,6 +161,8 @@ var FixedDataTableCellGroupImpl = createReactClass({
         activeColumnKey={this.props.activeColumnKey}
         editingRowIndex={this.props.editingRowIndex}
         editingColumnKey={this.props.editingColumnKey}
+        isCellEditable={columnProps.areCellsEditable}
+        isCellSelectable={columnProps.areCellsSelectable}
       />
     );
   },

@@ -18,8 +18,12 @@
 }
 
 .fixedDataTableCellGroupLayout/cellGroup > .public/fixedDataTableCell/main {
-  display: inline-block;
-  vertical-align: top;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 0;
+  flex-grow: 1;
+  align-items: stretch;
+  justify-content: stretch;
   white-space: normal;
 }
 

@@ -372,9 +372,6 @@ var FixedDataTable = createReactClass({
     onSelectCells: PropTypes.func,
 
     handleDocKeydown: PropTypes.func,
-
-    onCellClick: PropTypes.func,
-    onCellDoubleClick: PropTypes.func,
   },
 
   getDefaultProps() /*object*/ {
@@ -837,9 +834,13 @@ var FixedDataTable = createReactClass({
   },
 
   _onCellClick(rowIndex, columnKey, e) {
-    if(rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
+    if(this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+      return;
+    }
 
-    if( (this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey)) == false) return false;
+    if(rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
+    
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,
@@ -850,7 +851,11 @@ var FixedDataTable = createReactClass({
   },
 
   _onCellDoubleClick(rowIndex, columnKey, e) {
-    if( (this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey)) == false) return false;
+    if(this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+      return;
+    }
+
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,

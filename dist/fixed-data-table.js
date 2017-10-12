@@ -3204,10 +3204,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     onSelectCells: _propTypes2.default.func,
 
-    handleDocKeydown: _propTypes2.default.func,
-
-    onCellClick: _propTypes2.default.func,
-    onCellDoubleClick: _propTypes2.default.func
+    handleDocKeydown: _propTypes2.default.func
   },
 
   getDefaultProps: function getDefaultProps() /*object*/{
@@ -3595,9 +3592,13 @@ var FixedDataTable = (0, _createReactClass2.default)({
     // document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+      return;
+    }
+
     if (rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
 
-    if ((this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey)) == false) return false;
     this.setState(function (state) {
       return _extends({}, state, {
         activeRowIndex: rowIndex,
@@ -3609,7 +3610,11 @@ var FixedDataTable = (0, _createReactClass2.default)({
     this._bindEvents();
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
-    if ((this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey)) == false) return false;
+    if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
+      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+      return;
+    }
+
     this.setState(function (state) {
       return _extends({}, state, {
         activeRowIndex: rowIndex,
@@ -8812,14 +8817,10 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     return DEFAULT_PROPS;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
-    if (this.props.activeRowIndex == rowIndex && this.props.activeColumnKey == columnKey) {
-      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
-    } else this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
+    this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
-    if (this.props.activeRowIndex == rowIndex && this.props.activeColumnKey == columnKey) {
-      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
-    } else this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e);
+    this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey, e);
   },
   render: function render() /*object*/{
     var _this = this;

@@ -32,16 +32,27 @@
 }
 
 .fixedDataTableCellLayout/wrap1 {
-  display: table;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  flex-grow: 1;
 }
 
 .fixedDataTableCellLayout/wrap2 {
-  display: table-row;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  flex-grow: 1;
 }
 
 .fixedDataTableCellLayout/wrap3 {
-  display: table-cell;
-  vertical-align: middle;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  flex-grow: 1;
 }
 
 .fixedDataTableCellLayout/columnResizerContainer {

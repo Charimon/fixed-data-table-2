@@ -74,16 +74,60 @@
 }
 
 .fixedDataTableCellLayout_wrap1 {
-  display: table;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .fixedDataTableCellLayout_wrap2 {
-  display: table-row;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .fixedDataTableCellLayout_wrap3 {
-  display: table-cell;
-  vertical-align: middle;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .fixedDataTableCellLayout_columnResizerContainer {
@@ -435,6 +479,15 @@ body[dir="rtl"] .fixedDataTableColumnResizerLineLayout_main {
 
 .public_fixedDataTableCell_cellContent {
   padding: 8px;
+  -ms-flex-item-align: center;
+      align-self: center;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .public_fixedDataTableCell_columnResizerKnob {

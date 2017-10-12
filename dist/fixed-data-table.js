@@ -3204,7 +3204,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     onSelectCells: _propTypes2.default.func,
 
-    handleDocClick: _propTypes2.default.func,
     handleDocKeydown: _propTypes2.default.func,
 
     onCellClick: _propTypes2.default.func,
@@ -3313,6 +3312,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
     this._reportContentHeight();
   },
   render: function render() /*object*/{
+    var _this = this;
+
     var state = this.state;
     var props = this.props;
 
@@ -3471,6 +3472,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
     return _React2.default.createElement(
       'div',
       {
+        ref: function ref(_ref) {
+          return _this.nodeRef = _ref;
+        },
         className: (0, _joinClasses2.default)(this.state.className, (0, _cx2.default)('fixedDataTableLayout/main'), (0, _cx2.default)('public/fixedDataTable/main')),
         onWheel: this._wheelHandler.onWheel,
         onTouchStart: this._touchHandler.onTouchStart,
@@ -3534,26 +3538,27 @@ var FixedDataTable = (0, _createReactClass2.default)({
       editingColumnKey: state.editingColumnKey
     });
   },
-  _handleDocClick: function _handleDocClick(e) {
-    if ((this.props.handleDocClick && this.props.handleDocClick(e)) == false) return false;
-    this._unbindEvents();
-    this.setState(function (state) {
-      return _extends({}, state, {
-        activeRowIndex: null,
-        activeColumnKey: null,
-        editingRowIndex: null,
-        editingColumnKey: null
+  _handleOutsideClick: function _handleOutsideClick(e) {
+    if (!(this.nodeRef && this.nodeRef.contains(e.target))) {
+      this._unbindEvents();
+      this.setState(function (state) {
+        return _extends({}, state, {
+          activeRowIndex: null,
+          activeColumnKey: null,
+          editingRowIndex: null,
+          editingColumnKey: null
+        });
       });
-    });
+    }
   },
   _handleDocKeydown: function _handleDocKeydown(e) {
-    var _this = this;
+    var _this2 = this;
 
     if ((this.props.handleDocKeydown && this.props.handleDocKeydown(e)) == false) return false;
     var isEditing = this.state.editingRowIndex != null || this.state.editingColumnKey != null;
 
     var columnIndex = this.state.columns.findIndex(function (col) {
-      return col.props.columnKey == _this.state.activeColumnKey;
+      return col.props.columnKey == _this2.state.activeColumnKey;
     });
     if (e.key == "ArrowRight" && !isEditing) {
       e.preventDefault();
@@ -3580,12 +3585,12 @@ var FixedDataTable = (0, _createReactClass2.default)({
   },
   _bindEvents: function _bindEvents() {
     this._unbindEvents();
-    document.addEventListener("click", this._handleDocClick);
+    document.addEventListener("click", this._handleOutsideClick);
     document.addEventListener("keydown", this._handleDocKeydown);
     // document.onselectstart = () => false;
   },
   _unbindEvents: function _unbindEvents() {
-    document.removeEventListener("click", this._handleDocClick);
+    document.removeEventListener("click", this._handleOutsideClick);
     document.removeEventListener("keydown", this._handleDocKeydown);
     // document.onselectstart = null;
   },
@@ -3615,7 +3620,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     });
   },
   selectCell: function selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
-    var _this2 = this;
+    var _this3 = this;
 
     if (rowIndex == null || columnIndex == null) {
       this.setState(function (state) {
@@ -3635,7 +3640,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), rowCount - 1);
     var potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), columnCount - 1);
     var activeColumnIndex = this.state.columns.findIndex(function (col) {
-      return col.props.columnKey == _this2.state.activeColumnKey;
+      return col.props.columnKey == _this3.state.activeColumnKey;
     });
     var activeRowIndex = this.state.activeRowIndex;
 

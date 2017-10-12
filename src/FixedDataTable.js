@@ -371,7 +371,6 @@ var FixedDataTable = createReactClass({
 
     onSelectCells: PropTypes.func,
 
-    handleDocClick: PropTypes.func,
     handleDocKeydown: PropTypes.func,
 
     onCellClick: PropTypes.func,
@@ -713,6 +712,7 @@ var FixedDataTable = createReactClass({
 
     return (
       <div
+        ref={ref => this.nodeRef = ref }
         className={joinClasses(
           this.state.className,
           cx('fixedDataTableLayout/main'),
@@ -783,15 +783,16 @@ var FixedDataTable = createReactClass({
     );
   },
 
-  _handleDocClick(e) {
-    if( (this.props.handleDocClick && this.props.handleDocClick(e)) == false) return false;
-    this._unbindEvents();
-    this.setState(state => Object.assign({}, state, {
-      activeRowIndex: null,
-      activeColumnKey: null,
-      editingRowIndex: null,
-      editingColumnKey: null,
-    }))
+  _handleOutsideClick(e) {
+    if( !(this.nodeRef && this.nodeRef.contains(e.target)) ) {
+      this._unbindEvents();
+      this.setState(state => Object.assign({}, state, {
+        activeRowIndex: null,
+        activeColumnKey: null,
+        editingRowIndex: null,
+        editingColumnKey: null,
+      }))
+    }
   },
 
   _handleDocKeydown(e) {
@@ -825,12 +826,12 @@ var FixedDataTable = createReactClass({
 
   _bindEvents() {
     this._unbindEvents();
-    document.addEventListener("click", this._handleDocClick);
+    document.addEventListener("click", this._handleOutsideClick);
     document.addEventListener("keydown", this._handleDocKeydown);
     // document.onselectstart = () => false;
   },
   _unbindEvents() {
-    document.removeEventListener("click", this._handleDocClick);
+    document.removeEventListener("click", this._handleOutsideClick);
     document.removeEventListener("keydown", this._handleDocKeydown);
     // document.onselectstart = null;
   },

@@ -779,6 +779,7 @@ var FixedDataTable = createReactClass({
 
   _handleDocClick(e) {
     this._unbindEvents();
+    debugger
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: null,
       activeColumnKey: null,
@@ -788,6 +789,7 @@ var FixedDataTable = createReactClass({
   },
 
   _handleDocKeydown(e) {
+    debugger
     const isEditing = this.state.editingRowIndex != null || this.state.editingColumnKey != null
 
     const columnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey)
@@ -829,6 +831,7 @@ var FixedDataTable = createReactClass({
 
   _onCellClick(rowIndex, columnKey, e) {
     if(rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
+    debugger
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,

@@ -92,6 +92,7 @@ var FixedDataTableCellDefault = function (_React$Component) {
         height: height,
         width: width
       }, style);
+      var widthHeightStyle = { height: height, width: width };
 
       return _React2.default.createElement(
         'div',
@@ -101,11 +102,13 @@ var FixedDataTableCellDefault = function (_React$Component) {
         _React2.default.createElement(
           'div',
           {
-            className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap2'), (0, _cx2.default)('public/fixedDataTableCell/wrap2')) },
+            className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap2'), (0, _cx2.default)('public/fixedDataTableCell/wrap2')),
+            style: widthHeightStyle },
           _React2.default.createElement(
             'div',
             {
-              className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap3'), (0, _cx2.default)('public/fixedDataTableCell/wrap3')) },
+              className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap3'), (0, _cx2.default)('public/fixedDataTableCell/wrap3')),
+              style: widthHeightStyle },
             _React2.default.createElement(
               'div',
               { className: (0, _cx2.default)('public/fixedDataTableCell/cellContent') },

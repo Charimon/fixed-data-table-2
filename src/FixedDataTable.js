@@ -370,6 +370,12 @@ var FixedDataTable = createReactClass({
 
 
     onSelectCells: PropTypes.func,
+
+    handleDocClick: PropTypes.func,
+    handleDocKeydown: PropTypes.func,
+
+    onCellClick: PropTypes.func,
+    onCellDoubleClick: PropTypes.func,
   },
 
   getDefaultProps() /*object*/ {
@@ -778,6 +784,7 @@ var FixedDataTable = createReactClass({
   },
 
   _handleDocClick(e) {
+    if( (this.props.handleDocClick && this.props.handleDocClick(e)) == false) return false;
     this._unbindEvents();
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: null,
@@ -788,6 +795,7 @@ var FixedDataTable = createReactClass({
   },
 
   _handleDocKeydown(e) {
+    if( (this.props.handleDocKeydown && this.props.handleDocKeydown(e)) == false) return false;
     const isEditing = this.state.editingRowIndex != null || this.state.editingColumnKey != null
 
     const columnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey)
@@ -817,18 +825,20 @@ var FixedDataTable = createReactClass({
 
   _bindEvents() {
     this._unbindEvents();
-    // document.addEventListener("click", this._handleDocClick);
+    document.addEventListener("click", this._handleDocClick);
     document.addEventListener("keydown", this._handleDocKeydown);
     // document.onselectstart = () => false;
   },
   _unbindEvents() {
-    // document.removeEventListener("click", this._handleDocClick);
+    document.removeEventListener("click", this._handleDocClick);
     document.removeEventListener("keydown", this._handleDocKeydown);
     // document.onselectstart = null;
   },
 
   _onCellClick(rowIndex, columnKey, e) {
     if(rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
+
+    if( (this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey)) == false) return false;
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,
@@ -839,6 +849,7 @@ var FixedDataTable = createReactClass({
   },
 
   _onCellDoubleClick(rowIndex, columnKey, e) {
+    if( (this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey)) == false) return false;
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: rowIndex,
       activeColumnKey: columnKey,

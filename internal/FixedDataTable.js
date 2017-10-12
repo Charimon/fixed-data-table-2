@@ -424,7 +424,13 @@ var FixedDataTable = (0, _createReactClass2.default)({
      */
     bufferRowCount: _propTypes2.default.number,
 
-    onSelectCells: _propTypes2.default.func
+    onSelectCells: _propTypes2.default.func,
+
+    handleDocClick: _propTypes2.default.func,
+    handleDocKeydown: _propTypes2.default.func,
+
+    onCellClick: _propTypes2.default.func,
+    onCellDoubleClick: _propTypes2.default.func
   },
 
   getDefaultProps: function getDefaultProps() /*object*/{
@@ -751,6 +757,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     });
   },
   _handleDocClick: function _handleDocClick(e) {
+    if ((this.props.handleDocClick && this.props.handleDocClick(e)) == false) return false;
     this._unbindEvents();
     this.setState(function (state) {
       return _extends({}, state, {
@@ -764,6 +771,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
   _handleDocKeydown: function _handleDocKeydown(e) {
     var _this = this;
 
+    if ((this.props.handleDocKeydown && this.props.handleDocKeydown(e)) == false) return false;
     var isEditing = this.state.editingRowIndex != null || this.state.editingColumnKey != null;
 
     var columnIndex = this.state.columns.findIndex(function (col) {
@@ -794,17 +802,19 @@ var FixedDataTable = (0, _createReactClass2.default)({
   },
   _bindEvents: function _bindEvents() {
     this._unbindEvents();
-    // document.addEventListener("click", this._handleDocClick);
+    document.addEventListener("click", this._handleDocClick);
     document.addEventListener("keydown", this._handleDocKeydown);
     // document.onselectstart = () => false;
   },
   _unbindEvents: function _unbindEvents() {
-    // document.removeEventListener("click", this._handleDocClick);
+    document.removeEventListener("click", this._handleDocClick);
     document.removeEventListener("keydown", this._handleDocKeydown);
     // document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
     if (rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
+
+    if ((this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey)) == false) return false;
     this.setState(function (state) {
       return _extends({}, state, {
         activeRowIndex: rowIndex,
@@ -816,6 +826,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     this._bindEvents();
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
+    if ((this.props.onCellDoubleClick && this.props.onCellDoubleClick(rowIndex, columnKey)) == false) return false;
     this.setState(function (state) {
       return _extends({}, state, {
         activeRowIndex: rowIndex,

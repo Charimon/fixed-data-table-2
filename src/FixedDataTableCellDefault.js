@@ -82,6 +82,7 @@ class FixedDataTableCellDefault extends React.Component {
       width,
       ...style,
     };
+    const widthHeightStyle = {height, width}
 
     return (
       <div
@@ -96,12 +97,14 @@ class FixedDataTableCellDefault extends React.Component {
           className={joinClasses(
             cx('fixedDataTableCellLayout/wrap2'),
             cx('public/fixedDataTableCell/wrap2'),
-          )}>
+          )}
+          style={widthHeightStyle}>
           <div
             className={joinClasses(
               cx('fixedDataTableCellLayout/wrap3'),
               cx('public/fixedDataTableCell/wrap3'),
-            )}>
+            )}
+            style={widthHeightStyle}>
             <div className={cx('public/fixedDataTableCell/cellContent')}>
               {children}
             </div>

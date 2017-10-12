@@ -27,6 +27,11 @@
   flex-grow: 1;
   flex-basis: 0;
   box-sizing: border-box;
+  width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  max-height: 100%;
 }
 
 .public/fixedDataTableCell/columnResizerKnob {

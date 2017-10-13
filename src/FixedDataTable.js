@@ -834,49 +834,46 @@ var FixedDataTable = createReactClass({
   },
 
   _onCellClick(rowIndex, columnKey, e) {
-    debugger
-    console.log("cell click")
-    if(this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
-      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+    if(this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) return;
+
+    const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);
+    if(currentColumn && currentColumn.props.areCellsSelectable) {
+      this.setState(state => Object.assign({}, state, {
+        activeRowIndex: rowIndex,
+        activeColumnKey: columnKey,
+        editingRowIndex: null,
+        editingColumnKey: null,
+      }))
+      this._bindEvents()
+    } else {
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: null,
         activeColumnKey: null,
         editingRowIndex: null,
         editingColumnKey: null,
       }))
-      return;
     }
-
-    if(rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
-    
-    this.setState(state => Object.assign({}, state, {
-      activeRowIndex: rowIndex,
-      activeColumnKey: columnKey,
-      editingRowIndex: null,
-      editingColumnKey: null,
-    }))
-    this._bindEvents()
   },
 
   _onCellDoubleClick(rowIndex, columnKey, e) {
-    console.log("double click")
-    if(this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
-      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+    if(this.state.editingRowIndex == rowIndex && this.state.editingColumnKey == columnKey) return;
+
+    if(currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
+      this.setState(state => Object.assign({}, state, {
+        activeRowIndex: rowIndex,
+        activeColumnKey: columnKey,
+        editingRowIndex: rowIndex,
+        editingColumnKey: columnKey,
+      }))
+      this._bindEvents()
+    } else {
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: null,
         activeColumnKey: null,
         editingRowIndex: null,
         editingColumnKey: null,
       }))
-      return;
     }
-
-    this.setState(state => Object.assign({}, state, {
-      activeRowIndex: rowIndex,
-      activeColumnKey: columnKey,
-      editingRowIndex: rowIndex,
-      editingColumnKey: columnKey,
-    }))
   },
 
   selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {

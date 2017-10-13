@@ -814,10 +814,22 @@ var FixedDataTable = (0, _createReactClass2.default)({
     // document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
-    debugger;
-    console.log("cell click");
-    if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
-      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+    if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) return;
+
+    var currentColumn = this.state.columns && this.state.columns.find(function (c) {
+      return c.props.columnKey == columnKey;
+    });
+    if (currentColumn && currentColumn.props.areCellsSelectable) {
+      this.setState(function (state) {
+        return _extends({}, state, {
+          activeRowIndex: rowIndex,
+          activeColumnKey: columnKey,
+          editingRowIndex: null,
+          editingColumnKey: null
+        });
+      });
+      this._bindEvents();
+    } else {
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -826,25 +838,22 @@ var FixedDataTable = (0, _createReactClass2.default)({
           editingColumnKey: null
         });
       });
-      return;
     }
-
-    if (rowIndex == this.state.activeRowIndex && columnKey == this.state.activeColumnKey) return;
-
-    this.setState(function (state) {
-      return _extends({}, state, {
-        activeRowIndex: rowIndex,
-        activeColumnKey: columnKey,
-        editingRowIndex: null,
-        editingColumnKey: null
-      });
-    });
-    this._bindEvents();
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
-    console.log("double click");
-    if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
-      e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+    if (this.state.editingRowIndex == rowIndex && this.state.editingColumnKey == columnKey) return;
+
+    if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
+      this.setState(function (state) {
+        return _extends({}, state, {
+          activeRowIndex: rowIndex,
+          activeColumnKey: columnKey,
+          editingRowIndex: rowIndex,
+          editingColumnKey: columnKey
+        });
+      });
+      this._bindEvents();
+    } else {
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -853,17 +862,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
           editingColumnKey: null
         });
       });
-      return;
     }
-
-    this.setState(function (state) {
-      return _extends({}, state, {
-        activeRowIndex: rowIndex,
-        activeColumnKey: columnKey,
-        editingRowIndex: rowIndex,
-        editingColumnKey: columnKey
-      });
-    });
   },
   selectCell: function selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
     var _this3 = this;

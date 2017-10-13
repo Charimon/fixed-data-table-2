@@ -715,6 +715,7 @@ var FixedDataTable = createReactClass({
           cx('fixedDataTableLayout/main'),
           cx('public/fixedDataTable/main'),
         )}
+        onClick={this.unsetActiveCells}
         onWheel={this._wheelHandler.onWheel}
         onTouchStart={this._touchHandler.onTouchStart}
         onTouchEnd={this._touchHandler.onTouchEnd}
@@ -782,14 +783,7 @@ var FixedDataTable = createReactClass({
 
   _handleOutsideClick(e) {
     if( !(this.nodeRef && this.nodeRef.contains(e.target)) ) {
-      this._unbindEvents();
-      console.log("outside click")
-      this.setState(state => Object.assign({}, state, {
-        activeRowIndex: null,
-        activeColumnKey: null,
-        editingRowIndex: null,
-        editingColumnKey: null,
-      }))
+      this.unsetActiveCells()
     }
   },
 
@@ -839,7 +833,6 @@ var FixedDataTable = createReactClass({
 
     const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);
     if(currentColumn && currentColumn.props.areCellsSelectable) {
-      console.log("click cell", rowIndex, columnKey)
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: rowIndex,
         activeColumnKey: columnKey,
@@ -848,13 +841,7 @@ var FixedDataTable = createReactClass({
       }))
       this._bindEvents()
     } else {
-      console.log("click cell NULL")
-      this.setState(state => Object.assign({}, state, {
-        activeRowIndex: null,
-        activeColumnKey: null,
-        editingRowIndex: null,
-        editingColumnKey: null,
-      }))
+      this.unsetActiveCells()
     }
   },
 
@@ -862,7 +849,6 @@ var FixedDataTable = createReactClass({
     if(this.state.editingRowIndex == rowIndex && this.state.editingColumnKey == columnKey) return;
 
     if(currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
-      console.log("double click cell", rowIndex, columnKey)
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: rowIndex,
         activeColumnKey: columnKey,
@@ -871,27 +857,13 @@ var FixedDataTable = createReactClass({
       }))
       this._bindEvents()
     } else {
-      console.log("double click cell NULL")
-      this.setState(state => Object.assign({}, state, {
-        activeRowIndex: null,
-        activeColumnKey: null,
-        editingRowIndex: null,
-        editingColumnKey: null,
-      }))
+      this.unsetActiveCells()
     }
   },
 
   selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
-    console.log("selectCell")
     if(rowIndex == null || columnIndex == null) {
-      console.log("selectCell null")
-      this.setState(state => Object.assign({}, state, {
-        activeRowIndex: null,
-        activeColumnKey: null,
-        editingRowIndex: null,
-        editingColumnKey: null,
-      }))
-      this._unbindEvents()
+      this.unsetActiveCells()
       return
     }
 
@@ -932,7 +904,6 @@ var FixedDataTable = createReactClass({
 
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
 
-    console.log("selectCell", potentialActiveRowIndex, columnKey)
     this.setState(this._calculateState(Object.assign({}, this.props, {
       scrollToRow: potentialActiveRowIndex,
       scrollToColumn: potentialActiveColumnIndex,
@@ -943,6 +914,16 @@ var FixedDataTable = createReactClass({
     }), this.state))
 
     this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, activeColumnKey, editing)
+  },
+
+  unsetActiveCells() {
+    this.setState(state => Object.assign({}, state, {
+      activeRowIndex: null,
+      activeColumnKey: null,
+      editingRowIndex: null,
+      editingColumnKey: null,
+    }))
+    this._unbindEvents()
   },
 
   /**

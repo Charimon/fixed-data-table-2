@@ -695,6 +695,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
           return _this.nodeRef = _ref;
         },
         className: (0, _joinClasses2.default)(this.state.className, (0, _cx2.default)('fixedDataTableLayout/main'), (0, _cx2.default)('public/fixedDataTable/main')),
+        onClick: this.unsetActiveCells,
         onWheel: this._wheelHandler.onWheel,
         onTouchStart: this._touchHandler.onTouchStart,
         onTouchEnd: this._touchHandler.onTouchEnd,
@@ -759,16 +760,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
   },
   _handleOutsideClick: function _handleOutsideClick(e) {
     if (!(this.nodeRef && this.nodeRef.contains(e.target))) {
-      this._unbindEvents();
-      console.log("outside click");
-      this.setState(function (state) {
-        return _extends({}, state, {
-          activeRowIndex: null,
-          activeColumnKey: null,
-          editingRowIndex: null,
-          editingColumnKey: null
-        });
-      });
+      this.unsetActiveCells();
     }
   },
   _handleDocKeydown: function _handleDocKeydown(e) {
@@ -821,7 +813,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
       return c.props.columnKey == columnKey;
     });
     if (currentColumn && currentColumn.props.areCellsSelectable) {
-      console.log("click cell", rowIndex, columnKey);
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: rowIndex,
@@ -832,22 +823,13 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
       this._bindEvents();
     } else {
-      console.log("click cell NULL");
-      this.setState(function (state) {
-        return _extends({}, state, {
-          activeRowIndex: null,
-          activeColumnKey: null,
-          editingRowIndex: null,
-          editingColumnKey: null
-        });
-      });
+      this.unsetActiveCells();
     }
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
     if (this.state.editingRowIndex == rowIndex && this.state.editingColumnKey == columnKey) return;
 
     if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
-      console.log("double click cell", rowIndex, columnKey);
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: rowIndex,
@@ -858,32 +840,14 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
       this._bindEvents();
     } else {
-      console.log("double click cell NULL");
-      this.setState(function (state) {
-        return _extends({}, state, {
-          activeRowIndex: null,
-          activeColumnKey: null,
-          editingRowIndex: null,
-          editingColumnKey: null
-        });
-      });
+      this.unsetActiveCells();
     }
   },
   selectCell: function selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
     var _this3 = this;
 
-    console.log("selectCell");
     if (rowIndex == null || columnIndex == null) {
-      console.log("selectCell null");
-      this.setState(function (state) {
-        return _extends({}, state, {
-          activeRowIndex: null,
-          activeColumnKey: null,
-          editingRowIndex: null,
-          editingColumnKey: null
-        });
-      });
-      this._unbindEvents();
+      this.unsetActiveCells();
       return;
     }
 
@@ -932,7 +896,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;
 
-    console.log("selectCell", potentialActiveRowIndex, columnKey);
     this.setState(this._calculateState(_extends({}, this.props, {
       scrollToRow: potentialActiveRowIndex,
       scrollToColumn: potentialActiveColumnIndex,
@@ -943,6 +906,17 @@ var FixedDataTable = (0, _createReactClass2.default)({
     }), this.state));
 
     this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, activeColumnKey, editing);
+  },
+  unsetActiveCells: function unsetActiveCells() {
+    this.setState(function (state) {
+      return _extends({}, state, {
+        activeRowIndex: null,
+        activeColumnKey: null,
+        editingRowIndex: null,
+        editingColumnKey: null
+      });
+    });
+    this._unbindEvents();
   },
 
 

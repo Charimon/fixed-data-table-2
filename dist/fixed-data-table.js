@@ -3592,8 +3592,17 @@ var FixedDataTable = (0, _createReactClass2.default)({
     // document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    console.log("single click");
     if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
       e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+      this.setState(function (state) {
+        return _extends({}, state, {
+          activeRowIndex: null,
+          activeColumnKey: null,
+          editingRowIndex: null,
+          editingColumnKey: null
+        });
+      });
       return;
     }
 
@@ -3610,8 +3619,17 @@ var FixedDataTable = (0, _createReactClass2.default)({
     this._bindEvents();
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
+    console.log("double click");
     if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
       e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
+      this.setState(function (state) {
+        return _extends({}, state, {
+          activeRowIndex: null,
+          activeColumnKey: null,
+          editingRowIndex: null,
+          editingColumnKey: null
+        });
+      });
       return;
     }
 

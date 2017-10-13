@@ -234,7 +234,7 @@ var FixedDataTableCell = createReactClass({
     const isActiveCell = props.activeRowIndex == props.rowIndex && props.activeColumnKey == columnKey;
     const isEditingCell = props.editingRowIndex == props.rowIndex && props.editingColumnKey == columnKey;
 
-    console.log()
+    console.log("----")
     console.log(props.activeRowIndex, props.rowIndex)
     console.log(props.activeColumnKey, columnKey)
 

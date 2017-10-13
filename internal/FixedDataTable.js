@@ -760,7 +760,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
   _handleOutsideClick: function _handleOutsideClick(e) {
     if (!(this.nodeRef && this.nodeRef.contains(e.target))) {
       this._unbindEvents();
-      debugger;
+      console.log("outside click");
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -821,6 +821,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       return c.props.columnKey == columnKey;
     });
     if (currentColumn && currentColumn.props.areCellsSelectable) {
+      console.log("click cell", rowIndex, columnKey);
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: rowIndex,
@@ -831,7 +832,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
       this._bindEvents();
     } else {
-      debugger;
+      console.log("click cell NULL");
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -846,6 +847,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     if (this.state.editingRowIndex == rowIndex && this.state.editingColumnKey == columnKey) return;
 
     if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
+      console.log("double click cell", rowIndex, columnKey);
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: rowIndex,
@@ -856,7 +858,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
       this._bindEvents();
     } else {
-      debugger;
+      console.log("double click cell NULL");
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -870,8 +872,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
   selectCell: function selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
     var _this3 = this;
 
+    console.log("selectCell");
     if (rowIndex == null || columnIndex == null) {
-      debugger;
+      console.log("selectCell null");
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -929,6 +932,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;
 
+    console.log("selectCell", potentialActiveRowIndex, columnKey);
     this.setState(this._calculateState(_extends({}, this.props, {
       scrollToRow: potentialActiveRowIndex,
       scrollToColumn: potentialActiveColumnIndex,

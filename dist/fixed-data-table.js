@@ -3592,8 +3592,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
     // document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
-    console.log("single click");
-    debugger;
     if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
       e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
       this.setState(function (state) {
@@ -8915,12 +8913,12 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
       columnKey: columnKey,
       height: height,
       width: width,
-      onClick: this.props.isCellSelectable ? function (e) {
+      onClick: function onClick(e) {
         return _this._onCellClick(props.rowIndex, columnKey, e);
-      } : null,
-      onDoubleClick: this.props.isCellEditable && this.props.isCellSelectable ? function (e) {
+      },
+      onDoubleClick: function onDoubleClick(e) {
         return _this._onCellDoubleClick(props.rowIndex, columnKey, e);
-      } : null,
+      },
       isActiveCell: isActiveCell,
       isEditingCell: isEditingCell
     };

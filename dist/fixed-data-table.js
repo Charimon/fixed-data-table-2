@@ -3585,6 +3585,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     // document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    e.stopPropagation();
     if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) return;
 
     var currentColumn = this.state.columns && this.state.columns.find(function (c) {
@@ -3605,6 +3606,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     }
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {
+    e.stopPropagation();
     if (this.state.editingRowIndex == rowIndex && this.state.editingColumnKey == columnKey) return;
 
     if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {

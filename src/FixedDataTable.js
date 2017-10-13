@@ -707,6 +707,8 @@ var FixedDataTable = createReactClass({
         />;
     }
 
+    console.log("::", this.state.activeRowIndex, this.state.activeColumnKey)
+
     return (
       <div
         ref={ref => this.nodeRef = ref }

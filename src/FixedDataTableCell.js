@@ -288,8 +288,8 @@ var FixedDataTableCell = createReactClass({
       columnKey,
       height,
       width,
-      onClick: this.props.isCellSelectable?(e => this._onCellClick(props.rowIndex, columnKey, e)):null,
-      onDoubleClick: (this.props.isCellEditable && this.props.isCellSelectable)?(e => this._onCellDoubleClick(props.rowIndex, columnKey, e)):null,
+      onClick: e => this._onCellClick(props.rowIndex, columnKey, e),
+      onDoubleClick: e => this._onCellDoubleClick(props.rowIndex, columnKey, e),
       isActiveCell,
       isEditingCell,
     };

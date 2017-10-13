@@ -3466,8 +3466,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
     }
 
-    console.log("::", this.state.activeRowIndex, this.state.activeColumnKey);
-
     return _React2.default.createElement(
       'div',
       {

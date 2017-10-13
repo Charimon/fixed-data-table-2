@@ -261,12 +261,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     var isActiveCell = props.activeRowIndex == props.rowIndex && props.activeColumnKey == columnKey;
     var isEditingCell = props.editingRowIndex == props.rowIndex && props.editingColumnKey == columnKey;
 
-    console.log("----");
-    console.log(props.activeRowIndex, props.rowIndex);
-    console.log(props.activeColumnKey, columnKey);
-
     var className = (0, _joinClasses2.default)((0, _cx2.default)({
-      'fixedDataTableCellLayout/wtf': true,
       'fixedDataTableCellLayout/main': true,
       'fixedDataTableCellLayout/lastChild': props.lastChild,
       'fixedDataTableCellLayout/alignRight': props.align === 'right',

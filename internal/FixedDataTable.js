@@ -760,6 +760,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
   _handleOutsideClick: function _handleOutsideClick(e) {
     if (!(this.nodeRef && this.nodeRef.contains(e.target))) {
       this._unbindEvents();
+      debugger;
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -830,6 +831,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
       this._bindEvents();
     } else {
+      debugger;
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -854,6 +856,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
       this._bindEvents();
     } else {
+      debugger;
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,
@@ -868,6 +871,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var _this3 = this;
 
     if (rowIndex == null || columnIndex == null) {
+      debugger;
       this.setState(function (state) {
         return _extends({}, state, {
           activeRowIndex: null,

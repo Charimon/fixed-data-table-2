@@ -783,6 +783,7 @@ var FixedDataTable = createReactClass({
   _handleOutsideClick(e) {
     if( !(this.nodeRef && this.nodeRef.contains(e.target)) ) {
       this._unbindEvents();
+      debugger
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: null,
         activeColumnKey: null,
@@ -846,6 +847,7 @@ var FixedDataTable = createReactClass({
       }))
       this._bindEvents()
     } else {
+      debugger
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: null,
         activeColumnKey: null,
@@ -867,6 +869,7 @@ var FixedDataTable = createReactClass({
       }))
       this._bindEvents()
     } else {
+      debugger
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: null,
         activeColumnKey: null,
@@ -878,6 +881,7 @@ var FixedDataTable = createReactClass({
 
   selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
     if(rowIndex == null || columnIndex == null) {
+      debugger
       this.setState(state => Object.assign({}, state, {
         activeRowIndex: null,
         activeColumnKey: null,

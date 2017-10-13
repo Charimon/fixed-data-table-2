@@ -240,6 +240,7 @@ var FixedDataTableCell = createReactClass({
 
     var className = joinClasses(
       cx({
+        'fixedDataTableCellLayout/wtf': true,
         'fixedDataTableCellLayout/main': true,
         'fixedDataTableCellLayout/lastChild': props.lastChild,
         'fixedDataTableCellLayout/alignRight': props.align === 'right',

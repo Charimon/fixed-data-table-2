@@ -3593,6 +3593,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
     console.log("single click");
+    debugger;
     if (this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
       e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
       this.setState(function (state) {
@@ -8835,6 +8836,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     return DEFAULT_PROPS;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
+    debugger;
     this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e);
   },
   _onCellDoubleClick: function _onCellDoubleClick(rowIndex, columnKey, e) {

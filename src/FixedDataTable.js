@@ -835,6 +835,7 @@ var FixedDataTable = createReactClass({
 
   _onCellClick(rowIndex, columnKey, e) {
     console.log("single click")
+    debugger
     if(this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) {
       e.nativeEvent && e.nativeEvent.stopImmediatePropagation();
       this.setState(state => Object.assign({}, state, {

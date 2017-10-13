@@ -204,6 +204,7 @@ var FixedDataTableCell = createReactClass({
   },
 
   _onCellClick(rowIndex, columnKey, e) {
+    debugger
     this.props.onCellClick && this.props.onCellClick(rowIndex, columnKey, e)
   },
 

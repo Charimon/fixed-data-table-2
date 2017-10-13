@@ -921,6 +921,7 @@ var FixedDataTable = createReactClass({
   },
 
   unsetActiveCells() {
+    debugger
     this.setState(state => Object.assign({}, state, {
       activeRowIndex: null,
       activeColumnKey: null,

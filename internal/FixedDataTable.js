@@ -914,6 +914,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, activeColumnKey, editing);
   },
   unsetActiveCells: function unsetActiveCells() {
+    debugger;
     this.setState(function (state) {
       return _extends({}, state, {
         activeRowIndex: null,

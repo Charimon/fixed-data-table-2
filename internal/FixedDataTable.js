@@ -831,6 +831,10 @@ var FixedDataTable = (0, _createReactClass2.default)({
     e.stopPropagation();
     if (this.state.editingRowIndex == rowIndex && this.state.editingColumnKey == columnKey) return;
 
+    var currentColumn = this.state.columns && this.state.columns.find(function (c) {
+      return c.props.columnKey == columnKey;
+    });
+
     if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
       this.setState(function (state) {
         return _extends({}, state, {

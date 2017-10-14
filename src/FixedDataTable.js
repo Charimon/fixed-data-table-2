@@ -368,10 +368,14 @@ var FixedDataTable = createReactClass({
      */
     bufferRowCount: PropTypes.number,
 
-
     onSelectCells: PropTypes.func,
 
     handleDocKeydown: PropTypes.func,
+
+    activeRowIndex: PropTypes.string,
+    activeColumnKey: PropTypes.string,
+    editingRowIndex: PropTypes.string,
+    editingColumnKey: PropTypes.string,
   },
 
   getDefaultProps() /*object*/ {
@@ -829,7 +833,7 @@ var FixedDataTable = createReactClass({
   },
 
   _onCellClick(rowIndex, columnKey, e) {
-    e.stopPropagation();
+    e && e.stopPropagation();
     if(this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) return;
 
     const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);
@@ -850,7 +854,7 @@ var FixedDataTable = createReactClass({
   },
 
   _onCellDoubleClick(rowIndex, columnKey, e) {
-    e.stopPropagation();
+    e && e.stopPropagation();
     if(this.state.editingRowIndex == rowIndex && this.state.editingColumnKey == columnKey) return;
 
     const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);

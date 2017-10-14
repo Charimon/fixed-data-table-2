@@ -927,7 +927,12 @@ var FixedDataTable = createReactClass({
       editingColumnKey: (canEdit && editing)?columnKey:null,
     }), this.state))
 
-    this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, activeColumnKey, editing)
+    this.props.onSelectCells && this.props.onSelectCells(
+      potentialActiveRowIndex,
+      columnKey,
+      (canEdit && editing)?potentialActiveRowIndex:null,
+      (canEdit && editing)?columnKey:null,
+    )
   },
 
   unsetActiveCells() {

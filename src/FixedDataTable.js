@@ -911,8 +911,7 @@ var FixedDataTable = createReactClass({
     }
 
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
-
-    debugger
+    
     this.setState(this._calculateState(Object.assign({}, this.props, {
       scrollToRow: potentialActiveRowIndex,
       scrollToColumn: potentialActiveColumnIndex,

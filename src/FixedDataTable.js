@@ -835,6 +835,8 @@ var FixedDataTable = createReactClass({
     const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);
     if(currentColumn && currentColumn.props.areCellsSelectable) {
       this.setState(state => Object.assign({}, state, {
+        scrollToRow: rowIndex,
+        scrollToColumn: this.state.columns.findIndex(col => col.props.columnKey == columnKey),
         activeRowIndex: rowIndex,
         activeColumnKey: columnKey,
         editingRowIndex: null,
@@ -854,6 +856,8 @@ var FixedDataTable = createReactClass({
 
     if(currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
       this.setState(state => Object.assign({}, state, {
+        scrollToRow: rowIndex,
+        scrollToColumn: this.state.columns.findIndex(col => col.props.columnKey == columnKey),
         activeRowIndex: rowIndex,
         activeColumnKey: columnKey,
         editingRowIndex: rowIndex,

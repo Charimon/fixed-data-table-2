@@ -352,12 +352,6 @@ var FixedDataTableRow = function (_React$Component2) {
       var isActiveRow = this.props.activeRowIndex == this.props.index;
       var zIndex = isActiveRow ? 1 : 0;
 
-      if (this.props.index == -1) {
-        zIndex = 2;
-        console.log(this.props.index);
-        debugger;
-      }
-
       var style = {
         width: this.props.width,
         height: this.props.height,

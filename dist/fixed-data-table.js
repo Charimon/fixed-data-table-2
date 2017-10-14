@@ -1979,12 +1979,6 @@ var FixedDataTableRow = function (_React$Component2) {
       var isActiveRow = this.props.activeRowIndex == this.props.index;
       var zIndex = isActiveRow ? 1 : 0;
 
-      if (this.props.index == -1) {
-        zIndex = 2;
-        console.log(this.props.index);
-        debugger;
-      }
-
       var style = {
         width: this.props.width,
         height: this.props.height,
@@ -3331,7 +3325,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
         width: state.width,
         height: state.groupHeaderHeight,
         index: 0,
-        zIndex: 1,
+        zIndex: 2,
         offsetTop: 0,
         scrollLeft: state.scrollX,
         fixedColumns: state.groupHeaderFixedColumns,
@@ -3437,7 +3431,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       width: state.width,
       height: state.headerHeight,
       index: -1,
-      zIndex: 1,
+      zIndex: 2,
       offsetTop: headerOffsetTop,
       scrollLeft: state.scrollX,
       fixedColumns: state.headFixedColumns,

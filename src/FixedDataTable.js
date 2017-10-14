@@ -926,6 +926,7 @@ var FixedDataTable = createReactClass({
   },
 
   unsetActiveCells() {
+    debugger
     this.onSelectCells(null, null, null, null, null)
     this._unbindEvents()
   },

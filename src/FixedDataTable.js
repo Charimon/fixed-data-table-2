@@ -834,14 +834,15 @@ var FixedDataTable = createReactClass({
 
     const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);
     if(currentColumn && currentColumn.props.areCellsSelectable) {
-      this.setState(state => Object.assign({}, state, {
+      this.setState(this._calculateState(Object.assign({}, this.props, {
         scrollToRow: rowIndex,
         scrollToColumn: this.state.columns.findIndex(col => col.props.columnKey == columnKey),
         activeRowIndex: rowIndex,
         activeColumnKey: columnKey,
         editingRowIndex: null,
         editingColumnKey: null,
-      }))
+      }), this.state))
+
       this._bindEvents()
     } else {
       this.unsetActiveCells()
@@ -855,14 +856,15 @@ var FixedDataTable = createReactClass({
     const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);
 
     if(currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
-      this.setState(state => Object.assign({}, state, {
+      this.setState(this._calculateState(Object.assign({}, this.props, {
         scrollToRow: rowIndex,
         scrollToColumn: this.state.columns.findIndex(col => col.props.columnKey == columnKey),
         activeRowIndex: rowIndex,
         activeColumnKey: columnKey,
         editingRowIndex: rowIndex,
         editingColumnKey: columnKey,
-      }))
+      }), this.state))
+
       this._bindEvents()
     } else {
       this.unsetActiveCells()
@@ -911,7 +913,7 @@ var FixedDataTable = createReactClass({
     }
 
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
-    
+
     this.setState(this._calculateState(Object.assign({}, this.props, {
       scrollToRow: potentialActiveRowIndex,
       scrollToColumn: potentialActiveColumnIndex,

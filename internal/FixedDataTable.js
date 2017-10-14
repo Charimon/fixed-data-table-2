@@ -428,9 +428,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     handleDocKeydown: _propTypes2.default.func,
 
-    activeRowIndex: _propTypes2.default.string,
+    activeRowIndex: _propTypes2.default.number,
     activeColumnKey: _propTypes2.default.string,
-    editingRowIndex: _propTypes2.default.string,
+    editingRowIndex: _propTypes2.default.number,
     editingColumnKey: _propTypes2.default.string
   },
 

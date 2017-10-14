@@ -819,16 +819,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
       return c.props.columnKey == columnKey;
     });
     if (currentColumn && currentColumn.props.areCellsSelectable) {
-      this.setState(this._calculateState(_extends({}, this.props, {
-        scrollToRow: rowIndex,
-        scrollToColumn: this.state.columns.findIndex(function (col) {
-          return col.props.columnKey == columnKey;
-        }),
-        activeRowIndex: rowIndex,
-        activeColumnKey: columnKey,
-        editingRowIndex: null,
-        editingColumnKey: null
-      }), this.state));
+      this.onSelectCells(this.state.columns.findIndex(function (col) {
+        return col.props.columnKey == columnKey;
+      }), rowIndex, columnKey, null, null);
 
       this._bindEvents();
     } else {
@@ -844,16 +837,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
     });
 
     if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
-      this.setState(this._calculateState(_extends({}, this.props, {
-        scrollToRow: rowIndex,
-        scrollToColumn: this.state.columns.findIndex(function (col) {
-          return col.props.columnKey == columnKey;
-        }),
-        activeRowIndex: rowIndex,
-        activeColumnKey: columnKey,
-        editingRowIndex: rowIndex,
-        editingColumnKey: columnKey
-      }), this.state));
+      this.onSelectCells(this.state.columns.findIndex(function (col) {
+        return col.props.columnKey == columnKey;
+      }), rowIndex, columnKey, rowIndex, columnKey);
 
       this._bindEvents();
     } else {
@@ -913,26 +899,22 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;
 
+    this.onSelectCells(potentialActiveColumnIndex, potentialActiveRowIndex, columnKey, canEdit && editing ? potentialActiveRowIndex : null, canEdit && editing ? columnKey : null);
+  },
+  onSelectCells: function onSelectCells(scrollToColumn, activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey) {
     this.setState(this._calculateState(_extends({}, this.props, {
-      scrollToRow: potentialActiveRowIndex,
-      scrollToColumn: potentialActiveColumnIndex,
-      activeRowIndex: potentialActiveRowIndex,
-      activeColumnKey: columnKey,
-      editingRowIndex: canEdit && editing ? potentialActiveRowIndex : null,
-      editingColumnKey: canEdit && editing ? columnKey : null
+      scrollToRow: activeRowIndex,
+      scrollToColumn: scrollToColumn,
+      activeRowIndex: activeRowIndex,
+      activeColumnKey: activeColumnKey,
+      editingRowIndex: editingRowIndex,
+      editingColumnKey: editingColumnKey
     }), this.state));
 
-    this.props.onSelectCells && this.props.onSelectCells(potentialActiveRowIndex, columnKey, canEdit && editing ? potentialActiveRowIndex : null, canEdit && editing ? columnKey : null);
+    this.props.onSelectCells && this.props.onSelectCells(activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey);
   },
   unsetActiveCells: function unsetActiveCells() {
-    this.setState(function (state) {
-      return _extends({}, state, {
-        activeRowIndex: null,
-        activeColumnKey: null,
-        editingRowIndex: null,
-        editingColumnKey: null
-      });
-    });
+    this.onSelectCells(null, null, null, null, null);
     this._unbindEvents();
   },
 

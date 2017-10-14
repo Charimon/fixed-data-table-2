@@ -341,7 +341,7 @@ class FixedDataTableRow extends React.Component {
 
   render() /*object*/ {
     const isActiveRow = this.props.activeRowIndex == this.props.index
-    const zIndex = isActiveRow?1:0
+    const zIndex = this.props.index==-1?2:(isActiveRow?1:0)
     
     var style = {
       width: this.props.width,

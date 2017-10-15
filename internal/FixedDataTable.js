@@ -789,7 +789,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     } else if (e.key == "ArrowDown" && !isEditing) {
       e.preventDefault();
       this.selectCell(this.state.activeRowIndex + 1, columnIndex, false, e.shiftKey, false, true);
-    } else if (e.key == "Enter") {
+    } else if (e.key == "Enter" && !isEditing) {
       e.preventDefault();
       this.selectCell(this.state.activeRowIndex, columnIndex, true);
     } else if (e.key == "Escape" && !isEditing) {
@@ -914,7 +914,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
     this.props.onSelectCells && this.props.onSelectCells(activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey);
   },
   unsetActiveCells: function unsetActiveCells() {
-    debugger;
     this.onSelectCells(null, null, null, null, null);
     this._unbindEvents();
   },

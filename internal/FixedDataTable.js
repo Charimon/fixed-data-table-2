@@ -765,6 +765,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
   },
   _handleOutsideClick: function _handleOutsideClick(e) {
     if (!(this.nodeRef && this.nodeRef.contains(e.target))) {
+      debugger;
       this.unsetActiveCells();
     }
   },

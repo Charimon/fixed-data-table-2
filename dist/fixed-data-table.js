@@ -3680,6 +3680,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
     this.onSelectCells(potentialActiveColumnIndex, potentialActiveRowIndex, columnKey, canEdit && editing ? potentialActiveRowIndex : null, canEdit && editing ? columnKey : null);
   },
   onSelectCells: function onSelectCells(scrollToColumn, activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey) {
+    var _this4 = this;
+
     this.setState(this._calculateState(_extends({}, this.props, {
       scrollToRow: activeRowIndex,
       scrollToColumn: scrollToColumn,
@@ -3687,7 +3689,11 @@ var FixedDataTable = (0, _createReactClass2.default)({
       activeColumnKey: activeColumnKey,
       editingRowIndex: editingRowIndex,
       editingColumnKey: editingColumnKey
-    }), this.state));
+    }), this.state), function (_) {
+      if (_this4.props.onScrollEnd) {
+        _this4.props.onScrollEnd(_this4.state.scrollX, _this4.state.scrollY, _this4.state.firstRowIndex);
+      }
+    });
 
     this.props.onSelectCells && this.props.onSelectCells(activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey);
   },
@@ -4190,7 +4196,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
   // example, in componentWillUnmount), and a debounced version for normal
   // scroll handling.
   _didScrollStopSync: function _didScrollStopSync() {
-    debugger;
     if (!this._isScrolling) {
       return;
     }

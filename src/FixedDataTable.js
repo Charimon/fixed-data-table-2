@@ -915,7 +915,13 @@ var FixedDataTable = createReactClass({
       activeColumnKey: activeColumnKey,
       editingRowIndex: editingRowIndex,
       editingColumnKey: editingColumnKey,
-    }), this.state))
+    }), this.state), _ => {
+      if (this.props.onScrollEnd) {
+        this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
+      }
+    })
+
+    
     
     this.props.onSelectCells && this.props.onSelectCells(
       activeRowIndex,
@@ -1506,7 +1512,6 @@ var FixedDataTable = createReactClass({
   // example, in componentWillUnmount), and a debounced version for normal
   // scroll handling.
   _didScrollStopSync() {
-    debugger
     if (!this._isScrolling) {
       return;
     }

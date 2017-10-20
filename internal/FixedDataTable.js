@@ -1412,6 +1412,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
   // example, in componentWillUnmount), and a debounced version for normal
   // scroll handling.
   _didScrollStopSync: function _didScrollStopSync() {
+    debugger;
     if (!this._isScrolling) {
       return;
     }

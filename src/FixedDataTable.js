@@ -1506,6 +1506,7 @@ var FixedDataTable = createReactClass({
   // example, in componentWillUnmount), and a debounced version for normal
   // scroll handling.
   _didScrollStopSync() {
+    debugger
     if (!this._isScrolling) {
       return;
     }

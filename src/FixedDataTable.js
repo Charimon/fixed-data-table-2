@@ -788,12 +788,16 @@ var FixedDataTable = createReactClass({
   },
 
   _handleOutsideClick(e) {
-    if(this.props.handleOutsideClick) {
-      return this.props.handleOutsideClick(e);
+    const onDone = () => {
+      if( !(this.nodeRef && this.nodeRef.contains(e.target)) ) {
+        this.unsetActiveCells()
+      }
     }
 
-    if( !(this.nodeRef && this.nodeRef.contains(e.target)) ) {
-      this.unsetActiveCells()
+    if(this.props.handleOutsideClick) {
+      return this.props.handleOutsideClick(onDone, e);
+    } else {
+      onDone();
     }
   },
 

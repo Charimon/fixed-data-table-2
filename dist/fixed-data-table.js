@@ -3544,7 +3544,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     });
   },
   _handleOutsideClick: function _handleOutsideClick(e) {
-    if (this.props.handleOutsideClick != null) {
+    if (this.props.handleOutsideClick) {
       return this.props.handleOutsideClick(e);
     }
 

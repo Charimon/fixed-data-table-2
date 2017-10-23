@@ -207,7 +207,17 @@ FixedDataTableColumn.propTypes = {
   /**
    * Whether the column can be selected or skipped when using keys
    */
-  areCellsSelectable: _propTypes2.default.bool
+  areCellsSelectable: _propTypes2.default.bool,
+
+  /**
+   * Whether the column can be edited
+   */
+  isHeaderEditable: _propTypes2.default.bool,
+
+  /**
+   * Whether the column can be selected or skipped when using keys
+   */
+  isHeaderSelectable: _propTypes2.default.bool
 };
 FixedDataTableColumn.defaultProps = {
   allowCellsRecycling: false,

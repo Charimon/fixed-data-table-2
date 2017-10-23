@@ -161,8 +161,8 @@ var FixedDataTableCellGroupImpl = createReactClass({
         activeColumnKey={this.props.activeColumnKey}
         editingRowIndex={this.props.editingRowIndex}
         editingColumnKey={this.props.editingColumnKey}
-        isCellEditable={columnProps.areCellsEditable}
-        isCellSelectable={columnProps.areCellsSelectable}
+        isCellEditable={rowIndex==-1?columnProps.isHeaderEditable:columnProps.areCellsEditable}
+        isCellSelectable={rowIndex==-1?columnProps.isHeaderSelectable:columnProps.areCellsSelectable}
       />
     );
   },

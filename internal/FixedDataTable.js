@@ -830,11 +830,15 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var currentColumn = this.state.columns && this.state.columns.find(function (c) {
       return c.props.columnKey == columnKey;
     });
-    if (currentColumn && currentColumn.props.areCellsSelectable) {
+    if (currentColumn && rowIndex == -1 && currentColumn.props.isHeaderSelectable) {
       this.onSelectCells(this.state.columns.findIndex(function (col) {
         return col.props.columnKey == columnKey;
       }), rowIndex, columnKey, null, null);
-
+      this._bindEvents();
+    } else if (currentColumn && currentColumn.props.areCellsSelectable) {
+      this.onSelectCells(this.state.columns.findIndex(function (col) {
+        return col.props.columnKey == columnKey;
+      }), rowIndex, columnKey, null, null);
       this._bindEvents();
     } else {
       this.unsetActiveCells();
@@ -848,7 +852,13 @@ var FixedDataTable = (0, _createReactClass2.default)({
       return c.props.columnKey == columnKey;
     });
 
-    if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
+    if (currentColumn && rowIndex == -1 && currentColumn.props.isHeaderEditable && currentColumn.props.isHeaderSelectable) {
+      this.onSelectCells(this.state.columns.findIndex(function (col) {
+        return col.props.columnKey == columnKey;
+      }), rowIndex, columnKey, rowIndex, columnKey);
+
+      this._bindEvents();
+    } else if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
       this.onSelectCells(this.state.columns.findIndex(function (col) {
         return col.props.columnKey == columnKey;
       }), rowIndex, columnKey, rowIndex, columnKey);
@@ -875,10 +885,10 @@ var FixedDataTable = (0, _createReactClass2.default)({
     });
     var activeRowIndex = this.state.activeRowIndex;
 
-    var canEdit = this.state.columns[potentialActiveColumnIndex].props.areCellsEditable;
-    var canSelect = this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable;
+    var canEdit = rowIndex == -1 ? this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable : this.state.columns[potentialActiveColumnIndex].props.areCellsEditable;
+    var canSelect = rowIndex == -1 ? this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable : this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable;
     var areColumnsSelectable = this.state.columns.map(function (c) {
-      return c.props.areCellsSelectable;
+      return rowIndex == -1 && c.props.isHeaderSelectable || rowIndex != -1 && c.props.areCellsSelectable;
     });
     if (potentialActiveRowIndex >= 0) {
       if (potentialActiveColumnIndex > activeColumnIndex) {

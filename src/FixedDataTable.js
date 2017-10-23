@@ -847,9 +847,11 @@ var FixedDataTable = createReactClass({
     if(this.state.activeRowIndex == rowIndex && this.state.activeColumnKey == columnKey) return;
 
     const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);
-    if(currentColumn && currentColumn.props.areCellsSelectable) {
+    if(currentColumn && rowIndex == -1 && currentColumn.props.isHeaderSelectable) {
       this.onSelectCells(this.state.columns.findIndex(col => col.props.columnKey == columnKey), rowIndex, columnKey, null, null)
-
+      this._bindEvents()
+    } else if(currentColumn && currentColumn.props.areCellsSelectable) {
+      this.onSelectCells(this.state.columns.findIndex(col => col.props.columnKey == columnKey), rowIndex, columnKey, null, null)
       this._bindEvents()
     } else {
       this.unsetActiveCells()
@@ -862,7 +864,11 @@ var FixedDataTable = createReactClass({
 
     const currentColumn = this.state.columns && this.state.columns.find(c => c.props.columnKey == columnKey);
 
-    if(currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
+    if(currentColumn && rowIndex == -1 && currentColumn.props.isHeaderEditable && currentColumn.props.isHeaderSelectable) {
+      this.onSelectCells(this.state.columns.findIndex(col => col.props.columnKey == columnKey), rowIndex, columnKey, rowIndex, columnKey)
+
+      this._bindEvents()
+    } else if(currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
       this.onSelectCells(this.state.columns.findIndex(col => col.props.columnKey == columnKey), rowIndex, columnKey, rowIndex, columnKey)
 
       this._bindEvents()
@@ -884,9 +890,11 @@ var FixedDataTable = createReactClass({
     const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey);
     const activeRowIndex = this.state.activeRowIndex;
 
-    const canEdit = this.state.columns[potentialActiveColumnIndex].props.areCellsEditable
-    const canSelect = this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
-    const areColumnsSelectable = this.state.columns.map(c => c.props.areCellsSelectable);
+    const canEdit = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable:this.state.columns[potentialActiveColumnIndex].props.areCellsEditable
+    const canSelect = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable:this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
+    const areColumnsSelectable = this.state.columns.map(c =>
+      (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)
+    );
     if(potentialActiveRowIndex >= 0) {
       if(potentialActiveColumnIndex > activeColumnIndex) {
         //check if any columns to right are "selectable"

@@ -186,6 +186,16 @@ class FixedDataTableColumn extends React.Component {
     * Whether the column can be selected or skipped when using keys
     */
    areCellsSelectable: PropTypes.bool,
+
+   /**
+    * Whether the column can be edited
+    */
+   isHeaderEditable: PropTypes.bool,
+
+   /**
+    * Whether the column can be selected or skipped when using keys
+    */
+   isHeaderSelectable: PropTypes.bool,
  };
 
  static defaultProps = {

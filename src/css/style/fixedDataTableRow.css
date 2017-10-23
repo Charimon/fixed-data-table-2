@@ -45,3 +45,8 @@
   z-index: 2;
   pointer-events: none;
 }
+
+.public/fixedDataTableCell/editing,
+.public/fixedDataTableRow/highlighted .public/fixedDataTableCell/editing {
+  background: #dadeea;
+}

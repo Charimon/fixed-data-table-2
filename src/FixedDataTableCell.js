@@ -242,6 +242,7 @@ var FixedDataTableCell = createReactClass({
         'fixedDataTableCellLayout/alignCenter': props.align === 'center',
         'public/fixedDataTableCell/alignRight': props.align === 'right',
         'public/fixedDataTableCell/active': isActiveCell,
+        'public/fixedDataTableCell/editing': isEditingCell,
         'public/fixedDataTableCell/highlighted': props.highlighted,
         'public/fixedDataTableCell/main': true,
         'public/fixedDataTableCell/hasReorderHandle': !!props.onColumnReorder,

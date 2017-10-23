@@ -192,6 +192,11 @@
   border: 1px solid #5f6ea7;
   z-index: 2;
   pointer-events: none;
+}
+
+.public_fixedDataTableCell_editing,
+.public_fixedDataTableRow_highlighted .public_fixedDataTableCell_editing {
+  background: #dadeea;
 }/**
  * Copyright Schrodinger, LLC
  * All rights reserved.

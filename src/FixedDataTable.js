@@ -370,6 +370,8 @@ var FixedDataTable = createReactClass({
 
     onSelectCells: PropTypes.func,
 
+    handleOutsideClick: PropTypes.func,
+
     handleDocKeydown: PropTypes.func,
 
     activeRowIndex: PropTypes.number,
@@ -786,6 +788,10 @@ var FixedDataTable = createReactClass({
   },
 
   _handleOutsideClick(e) {
+    if(this.props.handleOutsideClick != null) {
+      return this.props.handleOutsideClick(e);
+    }
+
     if( !(this.nodeRef && this.nodeRef.contains(e.target)) ) {
       this.unsetActiveCells()
     }

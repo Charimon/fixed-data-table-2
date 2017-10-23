@@ -3204,6 +3204,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     onSelectCells: _propTypes2.default.func,
 
+    handleOutsideClick: _propTypes2.default.func,
+
     handleDocKeydown: _propTypes2.default.func,
 
     activeRowIndex: _propTypes2.default.number,
@@ -3542,6 +3544,10 @@ var FixedDataTable = (0, _createReactClass2.default)({
     });
   },
   _handleOutsideClick: function _handleOutsideClick(e) {
+    if (this.props.handleOutsideClick != null) {
+      return this.props.handleOutsideClick(e);
+    }
+
     if (!(this.nodeRef && this.nodeRef.contains(e.target))) {
       this.unsetActiveCells();
     }

@@ -895,6 +895,7 @@ var FixedDataTable = createReactClass({
     const areColumnsSelectable = this.state.columns.map(c =>
       (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)
     );
+    debugger
     if(potentialActiveRowIndex >= 0) {
       if(potentialActiveColumnIndex > activeColumnIndex) {
         //check if any columns to right are "selectable"

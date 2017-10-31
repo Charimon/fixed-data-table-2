@@ -3679,7 +3679,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
       return rowIndex == -1 && c.props.isHeaderSelectable || rowIndex != -1 && c.props.areCellsSelectable;
     });
     debugger;
-    if (potentialActiveRowIndex >= 0) {
+    if (potentialActiveRowIndex >= -1) {
       if (potentialActiveColumnIndex > activeColumnIndex) {
         //check if any columns to right are "selectable"
         var sliced = areColumnsSelectable.slice(potentialActiveColumnIndex);

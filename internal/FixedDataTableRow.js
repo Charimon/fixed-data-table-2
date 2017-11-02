@@ -137,6 +137,7 @@ var FixedDataTableRowImpl = function (_React$Component) {
       var className = (0, _cx2.default)({
         'fixedDataTableRowLayout/main': true,
         'public/fixedDataTableRow/main': true,
+        'public/fixedDataTableRow/active': this.props.index === this.props.activeRowIndex,
         'public/fixedDataTableRow/highlighted': this.props.index % 2 === 1,
         'public/fixedDataTableRow/odd': this.props.index % 2 === 1,
         'public/fixedDataTableRow/even': this.props.index % 2 === 0

@@ -493,6 +493,10 @@ body[dir="rtl"] .fixedDataTableColumnResizerLineLayout_main {
   background-color: #f4f4f4;
 }
 
+.public_fixedDataTableRow_active {
+  background-color: red;
+}
+
 .public_fixedDataTableCell_cellContent {
   padding: 8px;
   -ms-flex-item-align: center;

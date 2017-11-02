@@ -130,6 +130,7 @@ class FixedDataTableRowImpl extends React.Component {
     var className = cx({
       'fixedDataTableRowLayout/main': true,
       'public/fixedDataTableRow/main': true,
+      'public/fixedDataTableRow/active': (this.props.index === this.props.activeRowIndex),
       'public/fixedDataTableRow/highlighted': (this.props.index % 2 === 1),
       'public/fixedDataTableRow/odd': (this.props.index % 2 === 1),
       'public/fixedDataTableRow/even': (this.props.index % 2 === 0),

@@ -134,10 +134,11 @@ var FixedDataTableRowImpl = function (_React$Component) {
         width: this.props.width,
         height: this.props.height + subRowHeight
       };
+
       var className = (0, _cx2.default)({
         'fixedDataTableRowLayout/main': true,
         'public/fixedDataTableRow/main': true,
-        'public/fixedDataTableRow/active': this.props.index === this.props.activeRowIndex,
+        'public/fixedDataTableRow/active': (this.props.selectedRows || {})[this.props.index],
         'public/fixedDataTableRow/highlighted': this.props.index % 2 === 1,
         'public/fixedDataTableRow/odd': this.props.index % 2 === 1,
         'public/fixedDataTableRow/even': this.props.index % 2 === 0
@@ -166,7 +167,8 @@ var FixedDataTableRowImpl = function (_React$Component) {
         activeRowIndex: this.props.activeRowIndex,
         activeColumnKey: this.props.activeColumnKey,
         editingRowIndex: this.props.editingRowIndex,
-        editingColumnKey: this.props.editingColumnKey
+        editingColumnKey: this.props.editingColumnKey,
+        selectedRows: this.props.selectedRows
       });
       var columnsLeftShadow = this._renderColumnsLeftShadow(fixedColumnsWidth);
       var scrollableColumns = _React2.default.createElement(_FixedDataTableCellGroup2.default, {
@@ -192,7 +194,8 @@ var FixedDataTableRowImpl = function (_React$Component) {
         activeRowIndex: this.props.activeRowIndex,
         activeColumnKey: this.props.activeColumnKey,
         editingRowIndex: this.props.editingRowIndex,
-        editingColumnKey: this.props.editingColumnKey
+        editingColumnKey: this.props.editingColumnKey,
+        selectedRows: this.props.selectedRows
       });
       var scrollableColumnsWidth = this._getColumnsWidth(this.props.scrollableColumns);
       var columnsRightShadow = this._renderColumnsRightShadow(fixedColumnsWidth + scrollableColumnsWidth);
@@ -373,7 +376,8 @@ var FixedDataTableRow = function (_React$Component2) {
           activeRowIndex: this.props.activeRowIndex,
           activeColumnKey: this.props.activeColumnKey,
           editingRowIndex: this.props.editingRowIndex,
-          editingColumnKey: this.props.editingColumnKey
+          editingColumnKey: this.props.editingColumnKey,
+          selectedRows: this.props.selectedRows
         }))
       );
     }

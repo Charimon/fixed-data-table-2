@@ -127,10 +127,11 @@ class FixedDataTableRowImpl extends React.Component {
       width: this.props.width,
       height: this.props.height + subRowHeight,
     };
+
     var className = cx({
       'fixedDataTableRowLayout/main': true,
       'public/fixedDataTableRow/main': true,
-      'public/fixedDataTableRow/active': (this.props.index === this.props.activeRowIndex),
+      'public/fixedDataTableRow/active': (this.props.selectedRows || {})[this.props.index],
       'public/fixedDataTableRow/highlighted': (this.props.index % 2 === 1),
       'public/fixedDataTableRow/odd': (this.props.index % 2 === 1),
       'public/fixedDataTableRow/even': (this.props.index % 2 === 0),
@@ -161,6 +162,7 @@ class FixedDataTableRowImpl extends React.Component {
         activeColumnKey={this.props.activeColumnKey}
         editingRowIndex={this.props.editingRowIndex}
         editingColumnKey={this.props.editingColumnKey}
+        selectedRows={this.props.selectedRows}
       />;
     var columnsLeftShadow = this._renderColumnsLeftShadow(fixedColumnsWidth);
     var scrollableColumns =
@@ -188,6 +190,7 @@ class FixedDataTableRowImpl extends React.Component {
         activeColumnKey={this.props.activeColumnKey}
         editingRowIndex={this.props.editingRowIndex}
         editingColumnKey={this.props.editingColumnKey}
+        selectedRows={this.props.selectedRows}
       />;
     var scrollableColumnsWidth = this._getColumnsWidth(this.props.scrollableColumns);
     var columnsRightShadow = this._renderColumnsRightShadow(fixedColumnsWidth + scrollableColumnsWidth);
@@ -365,6 +368,7 @@ class FixedDataTableRow extends React.Component {
           activeColumnKey={this.props.activeColumnKey}
           editingRowIndex={this.props.editingRowIndex}
           editingColumnKey={this.props.editingColumnKey}
+          selectedRows={this.props.selectedRows}
         />
       </div>
     );

@@ -174,6 +174,7 @@ var FixedDataTableBufferedRows = (0, _createReactClass2.default)({
         activeColumnKey: props.activeColumnKey,
         editingRowIndex: props.editingRowIndex,
         editingColumnKey: props.editingColumnKey,
+        selectedRows: props.selectedRows,
         className: (0, _joinClasses2.default)(rowClassNameGetter(rowIndex), (0, _cx2.default)('public/fixedDataTable/bodyRow'), (0, _cx2.default)({
           'fixedDataTableLayout/hasBottomBorder': hasBottomBorder,
           'public/fixedDataTable/hasBottomBorder': hasBottomBorder

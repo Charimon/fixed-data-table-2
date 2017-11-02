@@ -180,6 +180,7 @@ var FixedDataTableBufferedRows = createReactClass({
           activeColumnKey={props.activeColumnKey}
           editingRowIndex={props.editingRowIndex}
           editingColumnKey={props.editingColumnKey}
+          selectedRows={props.selectedRows}
           className={joinClasses(
             rowClassNameGetter(rowIndex),
             cx('public/fixedDataTable/bodyRow'),

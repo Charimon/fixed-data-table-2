@@ -22,7 +22,7 @@
 }
 
 .public/fixedDataTableRow/active .public/fixedDataTableCell/main {
-  background-color: #d9e4f1;
+  background-color: var(--fbui-desktop-background-light-active);
 }
 
 .public/fixedDataTableRow/fixedColumnsDivider {

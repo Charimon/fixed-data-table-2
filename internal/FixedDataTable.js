@@ -433,7 +433,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
     activeRowIndex: _propTypes2.default.number,
     activeColumnKey: _propTypes2.default.string,
     editingRowIndex: _propTypes2.default.number,
-    editingColumnKey: _propTypes2.default.string
+    editingColumnKey: _propTypes2.default.string,
+
+    selectedRows: _propTypes2.default.array
   },
 
   getDefaultProps: function getDefaultProps() /*object*/{
@@ -890,33 +892,36 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var areColumnsSelectable = this.state.columns.map(function (c) {
       return rowIndex == -1 && c.props.isHeaderSelectable || rowIndex != -1 && c.props.areCellsSelectable;
     });
-    if (potentialActiveRowIndex >= -1) {
-      if (potentialActiveColumnIndex > activeColumnIndex) {
-        //check if any columns to right are "selectable"
-        var sliced = areColumnsSelectable.slice(potentialActiveColumnIndex);
-        var firstSelectable = sliced.findIndex(function (selectable) {
-          return selectable;
-        });
-        if (firstSelectable >= 0) {
-          potentialActiveColumnIndex += firstSelectable;
-        }
-      } else if (potentialActiveColumnIndex < activeColumnIndex) {
-        //check if any columns to left are "selectable"
-        var _sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex + 1);
-        _sliced.reverse();
-        var _firstSelectable = _sliced.findIndex(function (selectable) {
-          return selectable;
-        });
-        if (_firstSelectable >= 0) {
-          potentialActiveColumnIndex -= _firstSelectable;
-        }
+
+    if (!editing && withShiftKey && rowCount > 0) {
+      if (this.state.activeRowIndex == -1) potentialActiveRowIndex = 0;else potentialActiveRowIndex = this.state.activeRowIndex;
+    }
+
+    if (potentialActiveColumnIndex > activeColumnIndex) {
+      //check if any columns to right are "selectable"
+      var sliced = areColumnsSelectable.slice(potentialActiveColumnIndex);
+      var firstSelectable = sliced.findIndex(function (selectable) {
+        return selectable;
+      });
+      if (firstSelectable >= 0) {
+        potentialActiveColumnIndex += firstSelectable;
       }
-      //check if any columns you're trying to go to is "selectable"
-      //if not, stay on currently selected column
-      if (!areColumnsSelectable[potentialActiveColumnIndex]) {
-        potentialActiveColumnIndex = activeColumnIndex;
-        potentialActiveRowIndex = activeRowIndex;
+    } else if (potentialActiveColumnIndex < activeColumnIndex) {
+      //check if any columns to left are "selectable"
+      var _sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex + 1);
+      _sliced.reverse();
+      var _firstSelectable = _sliced.findIndex(function (selectable) {
+        return selectable;
+      });
+      if (_firstSelectable >= 0) {
+        potentialActiveColumnIndex -= _firstSelectable;
       }
+    }
+    //check if any columns you're trying to go to is "selectable"
+    //if not, stay on currently selected column
+    if (!areColumnsSelectable[potentialActiveColumnIndex]) {
+      potentialActiveColumnIndex = activeColumnIndex;
+      potentialActiveRowIndex = activeRowIndex;
     }
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;

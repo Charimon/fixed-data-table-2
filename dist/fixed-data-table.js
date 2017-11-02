@@ -3621,15 +3621,16 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var currentColumn = this.state.columns && this.state.columns.find(function (c) {
       return c.props.columnKey == columnKey;
     });
+    var columnIndex = this.state.columns.findIndex(function (col) {
+      return col.props.columnKey == columnKey;
+    });
     if (currentColumn && rowIndex == -1 && currentColumn.props.isHeaderSelectable) {
-      this.onSelectCells(this.state.columns.findIndex(function (col) {
-        return col.props.columnKey == columnKey;
-      }), rowIndex, columnKey, null, null);
+      // this.onSelectCells(columnIndex, rowIndex, columnKey, null, null)
+      this.selectCell(rowIndex, columnIndex, false, e.shiftKey, false, false);
       this._bindEvents();
     } else if (currentColumn && currentColumn.props.areCellsSelectable) {
-      this.onSelectCells(this.state.columns.findIndex(function (col) {
-        return col.props.columnKey == columnKey;
-      }), rowIndex, columnKey, null, null);
+      // this.onSelectCells(columnIndex, rowIndex, columnKey, null, null)
+      this.selectCell(rowIndex, columnIndex, false, e.shiftKey, false, false);
       this._bindEvents();
     } else {
       this.unsetActiveCells();
@@ -3642,18 +3643,15 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var currentColumn = this.state.columns && this.state.columns.find(function (c) {
       return c.props.columnKey == columnKey;
     });
+    var columnIndex = this.state.columns.findIndex(function (col) {
+      return col.props.columnKey == columnKey;
+    });
 
     if (currentColumn && rowIndex == -1 && currentColumn.props.isHeaderEditable && currentColumn.props.isHeaderSelectable) {
-      this.onSelectCells(this.state.columns.findIndex(function (col) {
-        return col.props.columnKey == columnKey;
-      }), rowIndex, columnKey, rowIndex, columnKey);
-
+      this.onSelectCells(columnIndex, rowIndex, columnKey, rowIndex, columnKey);
       this._bindEvents();
     } else if (currentColumn && currentColumn.props.areCellsEditable && currentColumn.props.areCellsSelectable) {
-      this.onSelectCells(this.state.columns.findIndex(function (col) {
-        return col.props.columnKey == columnKey;
-      }), rowIndex, columnKey, rowIndex, columnKey);
-
+      this.onSelectCells(columnIndex, rowIndex, columnKey, rowIndex, columnKey);
       this._bindEvents();
     } else {
       this.unsetActiveCells();

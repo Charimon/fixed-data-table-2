@@ -21,8 +21,8 @@
   background-color: var(--fbui-desktop-background-light);
 }
 
-.public/fixedDataTableCell/main.public/fixedDataTableRow/active {
-  background-color: var(--fbui-desktop-background-light-active);
+.public/fixedDataTableRow/highlighted .public/fixedDataTableRow/active {
+  background-color: red;
 }
 
 .public/fixedDataTableRow/fixedColumnsDivider {

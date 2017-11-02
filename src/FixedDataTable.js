@@ -889,7 +889,7 @@ var FixedDataTable = createReactClass({
       return
     }
 
-    let selectedRows = (this.state.selectedRows || {})
+    let selectedRows = {}
 
     const columnCount = this.state.columns.length;
     const rowCount = this.props.rowsCount;
@@ -911,6 +911,9 @@ var FixedDataTable = createReactClass({
       
       selectedRows = {}
       for(var i = potentialActiveRowIndex; i <= maxSelectedRow; i++) {
+        selectedRows[i] = true
+      }
+      for(var i = maxSelectedRow; i <= potentialActiveRowIndex; i++) {
         selectedRows[i] = true
       }
     }

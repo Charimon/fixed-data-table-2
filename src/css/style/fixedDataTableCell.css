@@ -21,10 +21,6 @@
   background-color: #f4f4f4;
 }
 
-.public/fixedDataTableRow/active {
-  background-color: red;
-}
-
 .public/fixedDataTableCell/cellContent {
   padding: 8px;
   align-self: center;

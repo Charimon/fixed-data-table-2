@@ -21,6 +21,10 @@
   background-color: var(--fbui-desktop-background-light);
 }
 
+.public/fixedDataTableCell/main.public/fixedDataTableRow/active {
+  background-color: var(--fbui-desktop-background-light-active);
+}
+
 .public/fixedDataTableRow/fixedColumnsDivider {
   border-color: var(--border-color);
 }

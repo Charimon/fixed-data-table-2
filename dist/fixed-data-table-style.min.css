@@ -83,10 +83,6 @@
   background-color: #f4f4f4;
 }
 
-.public_fixedDataTableRow_active {
-  background-color: red;
-}
-
 .public_fixedDataTableCell_cellContent {
   padding: 8px;
   -ms-flex-item-align: center;
@@ -170,6 +166,10 @@
 .public_fixedDataTableRow_highlighted,
 .public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
   background-color: #f6f7f8;
+}
+
+.public_fixedDataTableCell_main.public_fixedDataTableRow_active {
+  background-color: red;
 }
 
 .public_fixedDataTableRow_fixedColumnsDivider {

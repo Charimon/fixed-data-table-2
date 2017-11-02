@@ -24,7 +24,8 @@ var CSS_VARS = {
   'scrollbar-track-color': '#fff',
   'border-color': '#d3d3d3',
   'fbui-white': '#fff',
-  'fbui-desktop-background-light': '#f6f7f8'
+  'fbui-desktop-background-light': '#f6f7f8',
+  'fbui-desktop-background-light-active': 'red'
 };
 
 /**

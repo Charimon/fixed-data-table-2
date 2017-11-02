@@ -24,6 +24,7 @@ var CSS_VARS = {
   'border-color': '#d3d3d3',
   'fbui-white': '#fff',
   'fbui-desktop-background-light': '#f6f7f8',
+  'fbui-desktop-background-light-active': 'red',
 };
 
 /**

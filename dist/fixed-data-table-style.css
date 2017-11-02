@@ -172,7 +172,7 @@
   background-color: red;
 }
 
-.public_fixedDataTableRow_active.public_fixedDataTableRow_active {
+.public_fixedDataTableRow_active .public_fixedDataTableCell_main {
   background-color: green;
 }
 

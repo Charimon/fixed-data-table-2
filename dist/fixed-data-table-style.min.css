@@ -168,12 +168,8 @@
   background-color: #f6f7f8;
 }
 
-.public_fixedDataTableRow_active {
-  background-color: red;
-}
-
 .public_fixedDataTableRow_active .public_fixedDataTableCell_main {
-  background-color: green;
+  background-color: #d9e4f1;
 }
 
 .public_fixedDataTableRow_fixedColumnsDivider {

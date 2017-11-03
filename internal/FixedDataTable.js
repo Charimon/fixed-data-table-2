@@ -943,22 +943,25 @@ var FixedDataTable = (0, _createReactClass2.default)({
         selectedRows[potentialActiveRowIndex] = true;
       } else if (fromKeyboard && withShiftKey) {
         if (!withCtrlOrMetaKey) selectedRows = {};
-        debugger;
-        if (this.state.activeRowIndex > potentialActiveRowIndex) {
-          for (var i = potentialActiveRowIndex; i < rowCount; i++) {
+        var newSelectedRows = {};
+        if (potentialActiveRowIndex > this.state.activeRowIndex) {
+          for (var i = this.state.activeRowIndex; i < rowCount; i++) {
+            newSelectedRows[i] = true;
             if (selectedRows[i] == false) {
               selectedRows[i] = true;
               break;
             }
           }
         } else {
-          for (var i = potentialActiveRowIndex; i >= 0; i--) {
+          for (var i = this.state.activeRowIndex; i >= 0; i--) {
+            newSelectedRows[i] = true;
             if (selectedRows[i] == false) {
               selectedRows[i] = true;
               break;
             }
           }
         }
+        selectedRows = newSelectedRows;
         potentialActiveRowIndex = this.state.activeRowIndex;
       } else {
         selectedRows = {};

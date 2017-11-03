@@ -928,11 +928,14 @@ var FixedDataTable = (0, _createReactClass2.default)({
       } else if (!fromKeyboard && withShiftKey) {
         if (!withCtrlOrMetaKey) selectedRows = {};
 
+        console.log(this.state.activeRowIndex, potentialActiveRowIndex);
         if (this.state.activeRowIndex > potentialActiveRowIndex) {
+          debugger;
           for (var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) {
             selectedRows[i];
           }
         } else {
+          debugger;
           for (var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) {
             selectedRows[i];
           }

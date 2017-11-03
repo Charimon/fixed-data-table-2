@@ -895,19 +895,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
       return rowIndex == -1 && c.props.isHeaderSelectable || rowIndex != -1 && c.props.areCellsSelectable;
     });
 
-    if (!editing && withShiftKey && rowCount > 0) {
-      var maxSelectedRow = potentialActiveRowIndex;
-      if (this.state.activeRowIndex == -1) potentialActiveRowIndex = 0;else potentialActiveRowIndex = this.state.activeRowIndex;
-
-      selectedRows = {};
-      for (var i = potentialActiveRowIndex; i <= maxSelectedRow; i++) {
-        selectedRows[i] = true;
-      }
-      for (var i = maxSelectedRow; i <= potentialActiveRowIndex; i++) {
-        selectedRows[i] = true;
-      }
-    }
-
     if (potentialActiveColumnIndex > activeColumnIndex) {
       //check if any columns to right are "selectable"
       var sliced = areColumnsSelectable.slice(potentialActiveColumnIndex);
@@ -933,6 +920,24 @@ var FixedDataTable = (0, _createReactClass2.default)({
     if (!areColumnsSelectable[potentialActiveColumnIndex]) {
       potentialActiveColumnIndex = activeColumnIndex;
       potentialActiveRowIndex = activeRowIndex;
+    }
+
+    if (!editing && rowCount > 0) {
+      if (!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
+        selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
+      } else if (!fromKeyboard && withShiftKey) {
+        if (!withCtrlOrMetaKey) selectedRows = {};
+
+        if (this.state.activeRowIndex > potentialActiveRowIndex) {
+          for (var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) {
+            selectedRows[i];
+          }
+        } else {
+          for (var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) {
+            selectedRows[i];
+          }
+        }
+      }
     }
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;

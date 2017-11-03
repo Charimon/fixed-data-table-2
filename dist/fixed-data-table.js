@@ -3615,12 +3615,14 @@ var FixedDataTable = (0, _createReactClass2.default)({
     this._unbindEvents();
     document.addEventListener("click", this._handleOutsideClick);
     document.addEventListener("keydown", this._handleDocKeydown);
-    // document.onselectstart = () => false;
+    document.onselectstart = function () {
+      return false;
+    };
   },
   _unbindEvents: function _unbindEvents() {
     document.removeEventListener("click", this._handleOutsideClick);
     document.removeEventListener("keydown", this._handleDocKeydown);
-    // document.onselectstart = null;
+    document.onselectstart = null;
   },
   _onCellClick: function _onCellClick(rowIndex, columnKey, e) {
     e && e.stopPropagation();
@@ -3735,12 +3737,18 @@ var FixedDataTable = (0, _createReactClass2.default)({
       } else if (fromKeyboard && withShiftKey) {
         if (!withCtrlOrMetaKey) selectedRows = {};
         if (this.state.activeRowIndex > potentialActiveRowIndex) {
-          for (var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) {
-            selectedRows[i] = true;
+          for (var i = potentialActiveRowIndex; i < rowCount; i++) {
+            if (selectedRows[i] == false) {
+              selectedRows[i] = true;
+              break;
+            }
           }
         } else {
-          for (var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) {
-            selectedRows[i] = true;
+          for (var i = potentialActiveRowIndex; i >= 0; i--) {
+            if (selectedRows[i] == false) {
+              selectedRows[i] = true;
+              break;
+            }
           }
         }
         potentialActiveRowIndex = this.state.activeRowIndex;

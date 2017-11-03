@@ -936,6 +936,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
             selectedRows[i] = true;
           }
         }
+      } else {
+        selectedRows = {};
       }
     }
 

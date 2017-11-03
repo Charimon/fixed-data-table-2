@@ -937,6 +937,8 @@ var FixedDataTable = createReactClass({
         } else {
           for(var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) selectedRows[i] = true;
         }
+      } else {
+        selectedRows = {}
       }
     }
 

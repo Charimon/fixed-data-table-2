@@ -3737,21 +3737,16 @@ var FixedDataTable = (0, _createReactClass2.default)({
       } else if (fromKeyboard && withShiftKey) {
         if (!withCtrlOrMetaKey) selectedRows = {};
         var newSelectedRows = {};
+        debugger;
         if (potentialActiveRowIndex > this.state.activeRowIndex) {
           for (var i = this.state.activeRowIndex; i < rowCount; i++) {
             newSelectedRows[i] = true;
-            if (selectedRows[i] == false) {
-              selectedRows[i] = true;
-              break;
-            }
+            if (selectedRows[i] == false) break;
           }
         } else {
           for (var i = this.state.activeRowIndex; i >= 0; i--) {
             newSelectedRows[i] = true;
-            if (selectedRows[i] == false) {
-              selectedRows[i] = true;
-              break;
-            }
+            if (selectedRows[i] == false) break;
           }
         }
         selectedRows = newSelectedRows;

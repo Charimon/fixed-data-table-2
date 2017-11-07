@@ -840,12 +840,12 @@ var FixedDataTable = createReactClass({
     this._unbindEvents();
     document.addEventListener("click", this._handleOutsideClick);
     document.addEventListener("keydown", this._handleDocKeydown);
-    document.onselectstart = () => false;
+    // document.onselectstart = () => false;
   },
   _unbindEvents() {
     document.removeEventListener("click", this._handleOutsideClick);
     document.removeEventListener("keydown", this._handleDocKeydown);
-    document.onselectstart = null;
+    // document.onselectstart = null;
   },
 
   _onCellClick(rowIndex, columnKey, e) {

@@ -927,7 +927,7 @@ var FixedDataTable = createReactClass({
       potentialActiveRowIndex = activeRowIndex;
     }
 
-    if(!editing && rowCount > 0) {
+    if(!editing && rowCount > 0 && this.state.activeRowIndex != rowIndex) {
       if(!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
         selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
       } else if(!fromKeyboard && withShiftKey) {

@@ -91,6 +91,8 @@ var _FixedDataTableTranslateDOMPosition = require('./FixedDataTableTranslateDOMP
 
 var _FixedDataTableTranslateDOMPosition2 = _interopRequireDefault(_FixedDataTableTranslateDOMPosition);
 
+var _timers = require('core-js/library/web/timers');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ReactChildren = _React2.default.Children;
@@ -950,9 +952,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;
 
-    this.onSelectCells(potentialActiveColumnIndex, potentialActiveRowIndex, columnKey, canEdit && editing ? potentialActiveRowIndex : null, canEdit && editing ? columnKey : null
-    // selectedRows
-    );
+    this.onSelectCells(potentialActiveColumnIndex, potentialActiveRowIndex, columnKey, canEdit && editing ? potentialActiveRowIndex : null, canEdit && editing ? columnKey : null, selectedRows);
   },
   onSelectCells: function onSelectCells(scrollToColumn, activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, _selectedRows) {
     var _this4 = this;
@@ -968,9 +968,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
       editingColumnKey: editingColumnKey,
       selectedRows: selectedRows
     }), this.state), function (_) {
-      if (_this4.props.onScrollEnd) {
-        _this4.props.onScrollEnd(_this4.state.scrollX, _this4.state.scrollY, _this4.state.firstRowIndex);
-      }
+      (0, _timers.setTimeout)(function () {
+        _this4.props.onScrollEnd && _this4.props.onScrollEnd(_this4.state.scrollX, _this4.state.scrollY, _this4.state.firstRowIndex);
+      });
     });
 
     this.props.onSelectCells && this.props.onSelectCells(activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, selectedRows);

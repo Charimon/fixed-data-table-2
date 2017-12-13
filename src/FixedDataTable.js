@@ -33,6 +33,7 @@ import invariant from 'invariant';
 import joinClasses from 'joinClasses';
 import shallowEqual from 'shallowEqual';
 import FixedDataTableTranslateDOMPosition from 'FixedDataTableTranslateDOMPosition';
+import { setTimeout } from 'core-js/library/web/timers';
 
 var ReactChildren = React.Children;
 
@@ -969,7 +970,7 @@ var FixedDataTable = createReactClass({
       columnKey,
       (canEdit && editing) ? potentialActiveRowIndex : null,
       (canEdit && editing) ? columnKey : null,
-      // selectedRows
+      selectedRows
     )
   },
 
@@ -985,9 +986,9 @@ var FixedDataTable = createReactClass({
       editingColumnKey: editingColumnKey,
       selectedRows: selectedRows,
     }), this.state), _ => {
-      if (this.props.onScrollEnd) {
-        this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
-      }
+      setTimeout( () => {
+        this.props.onScrollEnd && this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
+      })
     })
     
     this.props.onSelectCells && this.props.onSelectCells(

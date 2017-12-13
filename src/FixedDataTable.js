@@ -896,71 +896,71 @@ var FixedDataTable = createReactClass({
     const rowCount = this.props.rowsCount;
     let potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), (rowCount - 1));
     let potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), (columnCount - 1));
-    // const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey);
-    // const activeRowIndex = this.state.activeRowIndex;
+    const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey);
+    const activeRowIndex = this.state.activeRowIndex;
 
     const canEdit = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable:this.state.columns[potentialActiveColumnIndex].props.areCellsEditable
-    // const canSelect = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable:this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
-    // const areColumnsSelectable = this.state.columns.map(c =>
-    //   (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)
-    // );
+    const canSelect = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable:this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
+    const areColumnsSelectable = this.state.columns.map(c =>
+      (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)
+    );
 
-    // if(potentialActiveColumnIndex > activeColumnIndex) {
-    //   //check if any columns to right are "selectable"
-    //   const sliced = areColumnsSelectable.slice(potentialActiveColumnIndex)
-    //   const firstSelectable = sliced.findIndex(selectable => selectable)
-    //   if(firstSelectable >= 0) {
-    //     potentialActiveColumnIndex += firstSelectable
-    //   }
-    // } else if(potentialActiveColumnIndex < activeColumnIndex) {
-    //   //check if any columns to left are "selectable"
-    //   const sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex+1)
-    //   sliced.reverse()
-    //   const firstSelectable = sliced.findIndex(selectable => selectable)
-    //   if(firstSelectable >= 0) {
-    //     potentialActiveColumnIndex -= firstSelectable
-    //   }
-    // }
-    // //check if any columns you're trying to go to is "selectable"
-    // //if not, stay on currently selected column
-    // if(!areColumnsSelectable[potentialActiveColumnIndex]) {
-    //   potentialActiveColumnIndex = activeColumnIndex;
-    //   potentialActiveRowIndex = activeRowIndex;
-    // }
+    if(potentialActiveColumnIndex > activeColumnIndex) {
+      //check if any columns to right are "selectable"
+      const sliced = areColumnsSelectable.slice(potentialActiveColumnIndex)
+      const firstSelectable = sliced.findIndex(selectable => selectable)
+      if(firstSelectable >= 0) {
+        potentialActiveColumnIndex += firstSelectable
+      }
+    } else if(potentialActiveColumnIndex < activeColumnIndex) {
+      //check if any columns to left are "selectable"
+      const sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex+1)
+      sliced.reverse()
+      const firstSelectable = sliced.findIndex(selectable => selectable)
+      if(firstSelectable >= 0) {
+        potentialActiveColumnIndex -= firstSelectable
+      }
+    }
+    //check if any columns you're trying to go to is "selectable"
+    //if not, stay on currently selected column
+    if(!areColumnsSelectable[potentialActiveColumnIndex]) {
+      potentialActiveColumnIndex = activeColumnIndex;
+      potentialActiveRowIndex = activeRowIndex;
+    }
 
-    // if(!editing && rowCount > 0 && this.state.activeRowIndex != rowIndex) {
-    //   if(!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
-    //     selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
-    //   } else if(!fromKeyboard && withShiftKey) {
-    //     if(!withCtrlOrMetaKey) selectedRows = {}
-    //     if(this.state.activeRowIndex > potentialActiveRowIndex) {
-    //       for(var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) selectedRows[i] = true;
-    //     } else {
-    //       for(var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) selectedRows[i] = true;
-    //     }
-    //     potentialActiveRowIndex = this.state.activeRowIndex;
-    //   } else if(fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
-    //     selectedRows[potentialActiveRowIndex] = true
-    //   } else if(fromKeyboard && withShiftKey) {
-    //     const newSelectedRows = withCtrlOrMetaKey ? selectedRows : {};
-    //     if(potentialActiveRowIndex > this.state.activeRowIndex) {
-    //       for(var i = this.state.activeRowIndex; i < rowCount; i++) {
-    //         newSelectedRows[i] = true;
-    //         if(!selectedRows[i]) break;
+    if(!editing && rowCount > 0 && this.state.activeRowIndex != rowIndex) {
+      if(!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
+        selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
+      } else if(!fromKeyboard && withShiftKey) {
+        if(!withCtrlOrMetaKey) selectedRows = {}
+        if(this.state.activeRowIndex > potentialActiveRowIndex) {
+          for(var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) selectedRows[i] = true;
+        } else {
+          for(var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) selectedRows[i] = true;
+        }
+        potentialActiveRowIndex = this.state.activeRowIndex;
+      } else if(fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
+        selectedRows[potentialActiveRowIndex] = true
+      } else if(fromKeyboard && withShiftKey) {
+        const newSelectedRows = withCtrlOrMetaKey ? selectedRows : {};
+        if(potentialActiveRowIndex > this.state.activeRowIndex) {
+          for(var i = this.state.activeRowIndex; i < rowCount; i++) {
+            newSelectedRows[i] = true;
+            if(!selectedRows[i]) break;
             
-    //       }
-    //     } else {
-    //       for(var i = this.state.activeRowIndex; i >= 0; i--) {
-    //         newSelectedRows[i] = true;
-    //         if(!selectedRows[i]) break;
-    //       }
-    //     }
-    //     selectedRows = newSelectedRows;
-    //     potentialActiveRowIndex = this.state.activeRowIndex;
-    //   } else {
-    //     selectedRows = {}
-    //   }
-    // }
+          }
+        } else {
+          for(var i = this.state.activeRowIndex; i >= 0; i--) {
+            newSelectedRows[i] = true;
+            if(!selectedRows[i]) break;
+          }
+        }
+        selectedRows = newSelectedRows;
+        potentialActiveRowIndex = this.state.activeRowIndex;
+      } else {
+        selectedRows = {}
+      }
+    }
 
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
 

@@ -927,6 +927,8 @@ var FixedDataTable = createReactClass({
       potentialActiveRowIndex = activeRowIndex;
     }
 
+    console.log("potentialActiveRowIndex", potentialActiveRowIndex)
+
     if(!editing && rowCount > 0 && this.state.activeRowIndex != rowIndex) {
       if(!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
         selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
@@ -960,10 +962,10 @@ var FixedDataTable = createReactClass({
         selectedRows = {}
       }
     }
+    console.log("potentialActiveRowIndex2", potentialActiveRowIndex)
 
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
 
-    console.log("this.onSelectCells", potentialActiveRowIndex)
     this.onSelectCells(
       potentialActiveColumnIndex,
       potentialActiveRowIndex,

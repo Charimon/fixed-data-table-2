@@ -904,62 +904,62 @@ var FixedDataTable = createReactClass({
       (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)
     );
 
-    if(potentialActiveColumnIndex > activeColumnIndex) {
-      //check if any columns to right are "selectable"
-      const sliced = areColumnsSelectable.slice(potentialActiveColumnIndex)
-      const firstSelectable = sliced.findIndex(selectable => selectable)
-      if(firstSelectable >= 0) {
-        potentialActiveColumnIndex += firstSelectable
-      }
-    } else if(potentialActiveColumnIndex < activeColumnIndex) {
-      //check if any columns to left are "selectable"
-      const sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex+1)
-      sliced.reverse()
-      const firstSelectable = sliced.findIndex(selectable => selectable)
-      if(firstSelectable >= 0) {
-        potentialActiveColumnIndex -= firstSelectable
-      }
-    }
-    //check if any columns you're trying to go to is "selectable"
-    //if not, stay on currently selected column
-    if(!areColumnsSelectable[potentialActiveColumnIndex]) {
-      potentialActiveColumnIndex = activeColumnIndex;
-      potentialActiveRowIndex = activeRowIndex;
-    }
+    // if(potentialActiveColumnIndex > activeColumnIndex) {
+    //   //check if any columns to right are "selectable"
+    //   const sliced = areColumnsSelectable.slice(potentialActiveColumnIndex)
+    //   const firstSelectable = sliced.findIndex(selectable => selectable)
+    //   if(firstSelectable >= 0) {
+    //     potentialActiveColumnIndex += firstSelectable
+    //   }
+    // } else if(potentialActiveColumnIndex < activeColumnIndex) {
+    //   //check if any columns to left are "selectable"
+    //   const sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex+1)
+    //   sliced.reverse()
+    //   const firstSelectable = sliced.findIndex(selectable => selectable)
+    //   if(firstSelectable >= 0) {
+    //     potentialActiveColumnIndex -= firstSelectable
+    //   }
+    // }
+    // //check if any columns you're trying to go to is "selectable"
+    // //if not, stay on currently selected column
+    // if(!areColumnsSelectable[potentialActiveColumnIndex]) {
+    //   potentialActiveColumnIndex = activeColumnIndex;
+    //   potentialActiveRowIndex = activeRowIndex;
+    // }
 
-    if(!editing && rowCount > 0 && this.state.activeRowIndex != rowIndex) {
-      if(!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
-        selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
-      } else if(!fromKeyboard && withShiftKey) {
-        if(!withCtrlOrMetaKey) selectedRows = {}
-        if(this.state.activeRowIndex > potentialActiveRowIndex) {
-          for(var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) selectedRows[i] = true;
-        } else {
-          for(var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) selectedRows[i] = true;
-        }
-        potentialActiveRowIndex = this.state.activeRowIndex;
-      } else if(fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
-        selectedRows[potentialActiveRowIndex] = true
-      } else if(fromKeyboard && withShiftKey) {
-        const newSelectedRows = withCtrlOrMetaKey ? selectedRows : {};
-        if(potentialActiveRowIndex > this.state.activeRowIndex) {
-          for(var i = this.state.activeRowIndex; i < rowCount; i++) {
-            newSelectedRows[i] = true;
-            if(!selectedRows[i]) break;
+    // if(!editing && rowCount > 0 && this.state.activeRowIndex != rowIndex) {
+    //   if(!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
+    //     selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
+    //   } else if(!fromKeyboard && withShiftKey) {
+    //     if(!withCtrlOrMetaKey) selectedRows = {}
+    //     if(this.state.activeRowIndex > potentialActiveRowIndex) {
+    //       for(var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) selectedRows[i] = true;
+    //     } else {
+    //       for(var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) selectedRows[i] = true;
+    //     }
+    //     potentialActiveRowIndex = this.state.activeRowIndex;
+    //   } else if(fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
+    //     selectedRows[potentialActiveRowIndex] = true
+    //   } else if(fromKeyboard && withShiftKey) {
+    //     const newSelectedRows = withCtrlOrMetaKey ? selectedRows : {};
+    //     if(potentialActiveRowIndex > this.state.activeRowIndex) {
+    //       for(var i = this.state.activeRowIndex; i < rowCount; i++) {
+    //         newSelectedRows[i] = true;
+    //         if(!selectedRows[i]) break;
             
-          }
-        } else {
-          for(var i = this.state.activeRowIndex; i >= 0; i--) {
-            newSelectedRows[i] = true;
-            if(!selectedRows[i]) break;
-          }
-        }
-        selectedRows = newSelectedRows;
-        potentialActiveRowIndex = this.state.activeRowIndex;
-      } else {
-        selectedRows = {}
-      }
-    }
+    //       }
+    //     } else {
+    //       for(var i = this.state.activeRowIndex; i >= 0; i--) {
+    //         newSelectedRows[i] = true;
+    //         if(!selectedRows[i]) break;
+    //       }
+    //     }
+    //     selectedRows = newSelectedRows;
+    //     potentialActiveRowIndex = this.state.activeRowIndex;
+    //   } else {
+    //     selectedRows = {}
+    //   }
+    // }
 
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
 
@@ -969,13 +969,13 @@ var FixedDataTable = createReactClass({
       columnKey,
       (canEdit && editing) ? potentialActiveRowIndex : null,
       (canEdit && editing) ? columnKey : null,
-      selectedRows
+      // selectedRows
     )
   },
 
   onSelectCells(scrollToColumn, activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, _selectedRows) {
-    const selectedRows = _selectedRows || {}
-    selectedRows[activeRowIndex] = true
+    // const selectedRows = _selectedRows || {}
+    // selectedRows[activeRowIndex] = true
     this.setState(this._calculateState(Object.assign({}, this.props, {
       scrollToRow: activeRowIndex,
       scrollToColumn: scrollToColumn,
@@ -983,7 +983,7 @@ var FixedDataTable = createReactClass({
       activeColumnKey: activeColumnKey,
       editingRowIndex: editingRowIndex,
       editingColumnKey: editingColumnKey,
-      selectedRows: selectedRows,
+      // selectedRows: selectedRows,
     }), this.state), _ => {
       if (this.props.onScrollEnd) {
         this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);

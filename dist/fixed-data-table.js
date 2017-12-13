@@ -3688,87 +3688,82 @@ var FixedDataTable = (0, _createReactClass2.default)({
       return rowIndex == -1 && c.props.isHeaderSelectable || rowIndex != -1 && c.props.areCellsSelectable;
     });
 
-    if (potentialActiveColumnIndex > activeColumnIndex) {
-      //check if any columns to right are "selectable"
-      var sliced = areColumnsSelectable.slice(potentialActiveColumnIndex);
-      var firstSelectable = sliced.findIndex(function (selectable) {
-        return selectable;
-      });
-      if (firstSelectable >= 0) {
-        potentialActiveColumnIndex += firstSelectable;
-      }
-    } else if (potentialActiveColumnIndex < activeColumnIndex) {
-      //check if any columns to left are "selectable"
-      var _sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex + 1);
-      _sliced.reverse();
-      var _firstSelectable = _sliced.findIndex(function (selectable) {
-        return selectable;
-      });
-      if (_firstSelectable >= 0) {
-        potentialActiveColumnIndex -= _firstSelectable;
-      }
-    }
-    //check if any columns you're trying to go to is "selectable"
-    //if not, stay on currently selected column
-    if (!areColumnsSelectable[potentialActiveColumnIndex]) {
-      potentialActiveColumnIndex = activeColumnIndex;
-      potentialActiveRowIndex = activeRowIndex;
-    }
+    // if(potentialActiveColumnIndex > activeColumnIndex) {
+    //   //check if any columns to right are "selectable"
+    //   const sliced = areColumnsSelectable.slice(potentialActiveColumnIndex)
+    //   const firstSelectable = sliced.findIndex(selectable => selectable)
+    //   if(firstSelectable >= 0) {
+    //     potentialActiveColumnIndex += firstSelectable
+    //   }
+    // } else if(potentialActiveColumnIndex < activeColumnIndex) {
+    //   //check if any columns to left are "selectable"
+    //   const sliced = areColumnsSelectable.slice(0, potentialActiveColumnIndex+1)
+    //   sliced.reverse()
+    //   const firstSelectable = sliced.findIndex(selectable => selectable)
+    //   if(firstSelectable >= 0) {
+    //     potentialActiveColumnIndex -= firstSelectable
+    //   }
+    // }
+    // //check if any columns you're trying to go to is "selectable"
+    // //if not, stay on currently selected column
+    // if(!areColumnsSelectable[potentialActiveColumnIndex]) {
+    //   potentialActiveColumnIndex = activeColumnIndex;
+    //   potentialActiveRowIndex = activeRowIndex;
+    // }
 
-    if (!editing && rowCount > 0 && this.state.activeRowIndex != rowIndex) {
-      if (!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
-        selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
-      } else if (!fromKeyboard && withShiftKey) {
-        if (!withCtrlOrMetaKey) selectedRows = {};
-        if (this.state.activeRowIndex > potentialActiveRowIndex) {
-          for (var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) {
-            selectedRows[i] = true;
-          }
-        } else {
-          for (var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) {
-            selectedRows[i] = true;
-          }
-        }
-        potentialActiveRowIndex = this.state.activeRowIndex;
-      } else if (fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
-        selectedRows[potentialActiveRowIndex] = true;
-      } else if (fromKeyboard && withShiftKey) {
-        var newSelectedRows = withCtrlOrMetaKey ? selectedRows : {};
-        if (potentialActiveRowIndex > this.state.activeRowIndex) {
-          for (var i = this.state.activeRowIndex; i < rowCount; i++) {
-            newSelectedRows[i] = true;
-            if (!selectedRows[i]) break;
-          }
-        } else {
-          for (var i = this.state.activeRowIndex; i >= 0; i--) {
-            newSelectedRows[i] = true;
-            if (!selectedRows[i]) break;
-          }
-        }
-        selectedRows = newSelectedRows;
-        potentialActiveRowIndex = this.state.activeRowIndex;
-      } else {
-        selectedRows = {};
-      }
-    }
+    // if(!editing && rowCount > 0 && this.state.activeRowIndex != rowIndex) {
+    //   if(!fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
+    //     selectedRows[potentialActiveRowIndex] = !selectedRows[potentialActiveRowIndex];
+    //   } else if(!fromKeyboard && withShiftKey) {
+    //     if(!withCtrlOrMetaKey) selectedRows = {}
+    //     if(this.state.activeRowIndex > potentialActiveRowIndex) {
+    //       for(var i = potentialActiveRowIndex; i <= this.state.activeRowIndex; i++) selectedRows[i] = true;
+    //     } else {
+    //       for(var i = this.state.activeRowIndex; i <= potentialActiveRowIndex; i++) selectedRows[i] = true;
+    //     }
+    //     potentialActiveRowIndex = this.state.activeRowIndex;
+    //   } else if(fromKeyboard && withCtrlOrMetaKey && !withShiftKey) {
+    //     selectedRows[potentialActiveRowIndex] = true
+    //   } else if(fromKeyboard && withShiftKey) {
+    //     const newSelectedRows = withCtrlOrMetaKey ? selectedRows : {};
+    //     if(potentialActiveRowIndex > this.state.activeRowIndex) {
+    //       for(var i = this.state.activeRowIndex; i < rowCount; i++) {
+    //         newSelectedRows[i] = true;
+    //         if(!selectedRows[i]) break;
+
+    //       }
+    //     } else {
+    //       for(var i = this.state.activeRowIndex; i >= 0; i--) {
+    //         newSelectedRows[i] = true;
+    //         if(!selectedRows[i]) break;
+    //       }
+    //     }
+    //     selectedRows = newSelectedRows;
+    //     potentialActiveRowIndex = this.state.activeRowIndex;
+    //   } else {
+    //     selectedRows = {}
+    //   }
+    // }
 
     var columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey;
 
-    this.onSelectCells(potentialActiveColumnIndex, potentialActiveRowIndex, columnKey, canEdit && editing ? potentialActiveRowIndex : null, canEdit && editing ? columnKey : null, selectedRows);
+    this.onSelectCells(potentialActiveColumnIndex, potentialActiveRowIndex, columnKey, canEdit && editing ? potentialActiveRowIndex : null, canEdit && editing ? columnKey : null
+    // selectedRows
+    );
   },
   onSelectCells: function onSelectCells(scrollToColumn, activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, _selectedRows) {
     var _this5 = this;
 
-    var selectedRows = _selectedRows || {};
-    selectedRows[activeRowIndex] = true;
+    // const selectedRows = _selectedRows || {}
+    // selectedRows[activeRowIndex] = true
     this.setState(this._calculateState(_extends({}, this.props, {
       scrollToRow: activeRowIndex,
       scrollToColumn: scrollToColumn,
       activeRowIndex: activeRowIndex,
       activeColumnKey: activeColumnKey,
       editingRowIndex: editingRowIndex,
-      editingColumnKey: editingColumnKey,
-      selectedRows: selectedRows
+      editingColumnKey: editingColumnKey
+      // selectedRows: selectedRows,
     }), this.state), function (_) {
       if (_this5.props.onScrollEnd) {
         _this5.props.onScrollEnd(_this5.state.scrollX, _this5.state.scrollY, _this5.state.firstRowIndex);

@@ -3664,8 +3664,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
     }
   },
   selectCell: function selectCell(rowIndex, columnIndex, editing, withShiftKey, withCtrlOrMetaKey, fromKeyboard) {
-    var _this4 = this;
-
     if (rowIndex == null || columnIndex == null) {
       this.unsetActiveCells();
       return;
@@ -3677,16 +3675,14 @@ var FixedDataTable = (0, _createReactClass2.default)({
     var rowCount = this.props.rowsCount;
     var potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), rowCount - 1);
     var potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), columnCount - 1);
-    var activeColumnIndex = this.state.columns.findIndex(function (col) {
-      return col.props.columnKey == _this4.state.activeColumnKey;
-    });
-    var activeRowIndex = this.state.activeRowIndex;
+    // const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey);
+    // const activeRowIndex = this.state.activeRowIndex;
 
-    var canEdit = rowIndex == -1 ? this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable : this.state.columns[potentialActiveColumnIndex].props.areCellsEditable;
-    var canSelect = rowIndex == -1 ? this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable : this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable;
-    var areColumnsSelectable = this.state.columns.map(function (c) {
-      return rowIndex == -1 && c.props.isHeaderSelectable || rowIndex != -1 && c.props.areCellsSelectable;
-    });
+    // const canEdit = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable:this.state.columns[potentialActiveColumnIndex].props.areCellsEditable
+    // const canSelect = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable:this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
+    // const areColumnsSelectable = this.state.columns.map(c =>
+    //   (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)
+    // );
 
     // if(potentialActiveColumnIndex > activeColumnIndex) {
     //   //check if any columns to right are "selectable"
@@ -3752,8 +3748,6 @@ var FixedDataTable = (0, _createReactClass2.default)({
     );
   },
   onSelectCells: function onSelectCells(scrollToColumn, activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, _selectedRows) {
-    var _this5 = this;
-
     // const selectedRows = _selectedRows || {}
     // selectedRows[activeRowIndex] = true
     this.setState(this._calculateState(_extends({}, this.props, {
@@ -3765,9 +3759,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
       editingColumnKey: editingColumnKey
       // selectedRows: selectedRows,
     }), this.state), function (_) {
-      if (_this5.props.onScrollEnd) {
-        _this5.props.onScrollEnd(_this5.state.scrollX, _this5.state.scrollY, _this5.state.firstRowIndex);
-      }
+      // if (this.props.onScrollEnd) {
+      //   this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
+      // }
     });
 
     // this.props.onSelectCells && this.props.onSelectCells(

@@ -895,14 +895,14 @@ var FixedDataTable = createReactClass({
     const rowCount = this.props.rowsCount;
     let potentialActiveRowIndex = Math.min(Math.max(rowIndex, -1), (rowCount - 1));
     let potentialActiveColumnIndex = Math.min(Math.max(columnIndex, 0), (columnCount - 1));
-    const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey);
-    const activeRowIndex = this.state.activeRowIndex;
+    // const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey);
+    // const activeRowIndex = this.state.activeRowIndex;
 
-    const canEdit = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable:this.state.columns[potentialActiveColumnIndex].props.areCellsEditable
-    const canSelect = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable:this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
-    const areColumnsSelectable = this.state.columns.map(c =>
-      (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)
-    );
+    // const canEdit = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable:this.state.columns[potentialActiveColumnIndex].props.areCellsEditable
+    // const canSelect = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable:this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
+    // const areColumnsSelectable = this.state.columns.map(c =>
+    //   (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)
+    // );
 
     // if(potentialActiveColumnIndex > activeColumnIndex) {
     //   //check if any columns to right are "selectable"
@@ -985,9 +985,9 @@ var FixedDataTable = createReactClass({
       editingColumnKey: editingColumnKey,
       // selectedRows: selectedRows,
     }), this.state), _ => {
-      if (this.props.onScrollEnd) {
-        this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
-      }
+      // if (this.props.onScrollEnd) {
+      //   this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
+      // }
     })
     
     // this.props.onSelectCells && this.props.onSelectCells(

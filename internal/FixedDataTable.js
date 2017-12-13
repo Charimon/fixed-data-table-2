@@ -973,7 +973,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
     });
 
-    this.props.onSelectCells && this.props.onSelectCells(activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, selectedRows);
+    (0, _timers.setTimeout)(function () {
+      _this4.props.onSelectCells && _this4.props.onSelectCells(activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, selectedRows);
+    });
   },
   unsetActiveCells: function unsetActiveCells() {
     this.onSelectCells(null, null, null, null, null);

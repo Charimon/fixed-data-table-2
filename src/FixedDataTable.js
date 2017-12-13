@@ -963,7 +963,7 @@ var FixedDataTable = createReactClass({
 
     const columnKey = this.state.columns[potentialActiveColumnIndex].props.columnKey
 
-    console.log("this.onSelectCell", potentialActiveRowIndex)
+    console.log("this.onSelectCells", potentialActiveRowIndex)
     this.onSelectCells(
       potentialActiveColumnIndex,
       potentialActiveRowIndex,

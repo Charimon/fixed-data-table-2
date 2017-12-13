@@ -885,7 +885,7 @@ var FixedDataTable = (0, _createReactClass2.default)({
     // const activeColumnIndex = this.state.columns.findIndex(col => col.props.columnKey == this.state.activeColumnKey);
     // const activeRowIndex = this.state.activeRowIndex;
 
-    // const canEdit = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable:this.state.columns[potentialActiveColumnIndex].props.areCellsEditable
+    var canEdit = rowIndex == -1 ? this.state.columns[potentialActiveColumnIndex].props.isHeaderEditable : this.state.columns[potentialActiveColumnIndex].props.areCellsEditable;
     // const canSelect = rowIndex==-1?this.state.columns[potentialActiveColumnIndex].props.isHeaderSelectable:this.state.columns[potentialActiveColumnIndex].props.areCellsSelectable
     // const areColumnsSelectable = this.state.columns.map(c =>
     //   (rowIndex == -1 && c.props.isHeaderSelectable) || (rowIndex != -1 && c.props.areCellsSelectable)

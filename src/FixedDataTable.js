@@ -974,8 +974,8 @@ var FixedDataTable = createReactClass({
   },
 
   onSelectCells(scrollToColumn, activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, _selectedRows) {
-    // const selectedRows = _selectedRows || {}
-    // selectedRows[activeRowIndex] = true
+    const selectedRows = _selectedRows || {}
+    selectedRows[activeRowIndex] = true
     this.setState(this._calculateState(Object.assign({}, this.props, {
       scrollToRow: activeRowIndex,
       scrollToColumn: scrollToColumn,
@@ -983,20 +983,20 @@ var FixedDataTable = createReactClass({
       activeColumnKey: activeColumnKey,
       editingRowIndex: editingRowIndex,
       editingColumnKey: editingColumnKey,
-      // selectedRows: selectedRows,
+      selectedRows: selectedRows,
     }), this.state), _ => {
-      // if (this.props.onScrollEnd) {
-      //   this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
-      // }
+      if (this.props.onScrollEnd) {
+        this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
+      }
     })
     
-    // this.props.onSelectCells && this.props.onSelectCells(
-    //   activeRowIndex,
-    //   activeColumnKey,
-    //   editingRowIndex,
-    //   editingColumnKey,
-    //   selectedRows
-    // )
+    this.props.onSelectCells && this.props.onSelectCells(
+      activeRowIndex,
+      activeColumnKey,
+      editingRowIndex,
+      editingColumnKey,
+      selectedRows
+    )
   },
 
   unsetActiveCells() {

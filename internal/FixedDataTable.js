@@ -955,29 +955,25 @@ var FixedDataTable = (0, _createReactClass2.default)({
     );
   },
   onSelectCells: function onSelectCells(scrollToColumn, activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, _selectedRows) {
-    // const selectedRows = _selectedRows || {}
-    // selectedRows[activeRowIndex] = true
+    var _this4 = this;
+
+    var selectedRows = _selectedRows || {};
+    selectedRows[activeRowIndex] = true;
     this.setState(this._calculateState(_extends({}, this.props, {
       scrollToRow: activeRowIndex,
       scrollToColumn: scrollToColumn,
       activeRowIndex: activeRowIndex,
       activeColumnKey: activeColumnKey,
       editingRowIndex: editingRowIndex,
-      editingColumnKey: editingColumnKey
-      // selectedRows: selectedRows,
+      editingColumnKey: editingColumnKey,
+      selectedRows: selectedRows
     }), this.state), function (_) {
-      // if (this.props.onScrollEnd) {
-      //   this.props.onScrollEnd(this.state.scrollX, this.state.scrollY, this.state.firstRowIndex);
-      // }
+      if (_this4.props.onScrollEnd) {
+        _this4.props.onScrollEnd(_this4.state.scrollX, _this4.state.scrollY, _this4.state.firstRowIndex);
+      }
     });
 
-    // this.props.onSelectCells && this.props.onSelectCells(
-    //   activeRowIndex,
-    //   activeColumnKey,
-    //   editingRowIndex,
-    //   editingColumnKey,
-    //   selectedRows
-    // )
+    this.props.onSelectCells && this.props.onSelectCells(activeRowIndex, activeColumnKey, editingRowIndex, editingColumnKey, selectedRows);
   },
   unsetActiveCells: function unsetActiveCells() {
     this.onSelectCells(null, null, null, null, null);
